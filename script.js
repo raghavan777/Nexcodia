@@ -426,8 +426,9 @@ const TYPED_STRINGS = [
 })();
 
 /* ================================================================
-   FLIP COUNTDOWN TIMER + PER-SECOND TICK AUDIO
-   Auto-starts immediately upon website load.
+   FLIP COUNTDOWN TIMER + VIEWPORT-TRIGGERED TICK AUDIO
+   Audio plays automatically when countdown is visible in the viewport,
+   and pauses automatically when scrolled out of view.
    ================================================================ */
 (function initCountdownAndTick() {
   // --- DOM elements ---
@@ -441,6 +442,7 @@ const TYPED_STRINGS = [
   // --- Audio ---
   const tickAudio = new Audio('tick-sound.wav');
   tickAudio.preload = 'auto';
+  let inViewport = false;
   let lastSecond = -1;
 
   function pad(n) { return String(n).padStart(2, '0'); }
@@ -457,8 +459,9 @@ const TYPED_STRINGS = [
     }
   }
 
-  /* Fire one tick — rewind & play instantly without waiting for user action */
+  /* Fire one tick — only when countdown is currently visible in the viewport */
   function fireTick() {
+    if (!inViewport) return;
     try {
       tickAudio.currentTime = 0;
       const playPromise = tickAudio.play();
@@ -468,15 +471,16 @@ const TYPED_STRINGS = [
     } catch (e) {}
   }
 
-  /* Immediate auto-start attempts */
+  /* Immediate auto-start when countdown is in view */
   function tryAutoStart() {
+    if (!inViewport) return;
     try {
       tickAudio.play().then(() => {
-        // Autoplay successfully initiated
+        // Autoplay successfully initiated while visible
       }).catch(() => {
         // Passive fallback in case strict browser autoplay blocks the initial frame
         const quickUnlock = () => {
-          fireTick();
+          if (inViewport) fireTick();
           ['click', 'keydown', 'touchstart', 'pointerdown', 'scroll', 'mousemove', 'wheel'].forEach(evt =>
             window.removeEventListener(evt, quickUnlock)
           );
@@ -488,10 +492,29 @@ const TYPED_STRINGS = [
     } catch (e) {}
   }
 
-  // Attempt autoplay immediately
-  tryAutoStart();
+  // --- Viewport Intersection Observer ---
+  const cdWrapper = document.querySelector('.countdown-wrap') || document.querySelector('.countdown') || document.getElementById('hero');
+  if (cdWrapper && 'IntersectionObserver' in window) {
+    const cdObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        inViewport = entry.isIntersecting && entry.intersectionRatio > 0.05;
+        if (inViewport) {
+          tryAutoStart();
+        }
+      });
+    }, {
+      threshold: [0, 0.05, 0.2, 0.5]
+    });
+    cdObserver.observe(cdWrapper);
+  } else {
+    inViewport = true;
+  }
+
+  // Attempt auto-start on load if already in viewport
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', tryAutoStart);
+  } else {
+    tryAutoStart();
   }
   window.addEventListener('load', tryAutoStart);
 
@@ -514,7 +537,7 @@ const TYPED_STRINGS = [
     flip(els.m, m);
     flip(els.s, s);
 
-    /* Trigger tick exactly when the second digit changes */
+    /* Trigger tick exactly when the second digit changes and timer is visible */
     if (s !== lastSecond) {
       lastSecond = s;
       fireTick();
