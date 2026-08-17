@@ -427,8 +427,7 @@ const TYPED_STRINGS = [
 
 /* ================================================================
    FLIP COUNTDOWN TIMER + PER-SECOND TICK AUDIO
-   Uses HTMLAudioElement (works on file:// without CORS issues).
-   On every second change: rewind to 0 and play — instant, gapless.
+   Auto-starts immediately upon website load.
    ================================================================ */
 (function initCountdownAndTick() {
   // --- DOM elements ---
@@ -442,7 +441,6 @@ const TYPED_STRINGS = [
   // --- Audio ---
   const tickAudio = new Audio('tick-sound.wav');
   tickAudio.preload = 'auto';
-  let unlocked = false;
   let lastSecond = -1;
 
   function pad(n) { return String(n).padStart(2, '0'); }
@@ -459,30 +457,43 @@ const TYPED_STRINGS = [
     }
   }
 
-  /* Fire one tick — rewind & play instantly */
+  /* Fire one tick — rewind & play instantly without waiting for user action */
   function fireTick() {
-    if (!unlocked) return;
     try {
       tickAudio.currentTime = 0;
-      tickAudio.play().catch(() => {});
+      const playPromise = tickAudio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
     } catch (e) {}
   }
 
-  /* Unlock audio on first interaction (browser autoplay policy) */
-  function unlockAudio() {
-    if (unlocked) return;
-    // Warm-up: play then immediately pause to unlock the audio element
-    tickAudio.play().then(() => {
-      tickAudio.pause();
-      tickAudio.currentTime = 0;
-      unlocked = true;
-    }).catch(() => {
-      unlocked = true; // still mark unlocked so we try on next tick
-    });
+  /* Immediate auto-start attempts */
+  function tryAutoStart() {
+    try {
+      tickAudio.play().then(() => {
+        // Autoplay successfully initiated
+      }).catch(() => {
+        // Passive fallback in case strict browser autoplay blocks the initial frame
+        const quickUnlock = () => {
+          fireTick();
+          ['click', 'keydown', 'touchstart', 'pointerdown', 'scroll', 'mousemove', 'wheel'].forEach(evt =>
+            window.removeEventListener(evt, quickUnlock)
+          );
+        };
+        ['click', 'keydown', 'touchstart', 'pointerdown', 'scroll', 'mousemove', 'wheel'].forEach(evt =>
+          window.addEventListener(evt, quickUnlock, { passive: true, once: true })
+        );
+      });
+    } catch (e) {}
   }
-  ['click', 'keydown', 'touchstart', 'pointerdown', 'scroll', 'mousemove'].forEach(evt =>
-    window.addEventListener(evt, unlockAudio, { passive: true })
-  );
+
+  // Attempt autoplay immediately
+  tryAutoStart();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryAutoStart);
+  }
+  window.addEventListener('load', tryAutoStart);
 
   /* Main update loop — runs every 100ms so second changes are caught promptly */
   function update() {
