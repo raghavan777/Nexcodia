@@ -2305,9 +2305,37 @@ body:has(button:hover) .cur-outer {
 
 .ws-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   margin-bottom: 3rem;
+}
+
+/* Pyramid Layout — Desktop View Only (Row 1: 3 boxes, Row 2: 2 centered boxes) */
+@media (min-width: 992px) {
+  .ws-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.5rem;
+  }
+
+  .ws-grid .ws-card:nth-child(1) {
+    grid-column: 1 / span 2;
+  }
+
+  .ws-grid .ws-card:nth-child(2) {
+    grid-column: 3 / span 2;
+  }
+
+  .ws-grid .ws-card:nth-child(3) {
+    grid-column: 5 / span 2;
+  }
+
+  .ws-grid .ws-card:nth-child(4) {
+    grid-column: 2 / span 2;
+  }
+
+  .ws-grid .ws-card:nth-child(5) {
+    grid-column: 4 / span 2;
+  }
 }
 
 .ws-card {
@@ -2315,6 +2343,8 @@ body:has(button:hover) .cur-outer {
   border: 1px solid var(--border);
   border-radius: var(--r);
   padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
   transition: all var(--tr);
 }
 
@@ -2717,7 +2747,8 @@ body:has(button:hover) .cur-outer {
   position: relative;
   overflow: hidden;
   z-index: 1;
-  background: var(--gray);
+  background: linear-gradient(180deg, rgba(5, 5, 5, 0.88) 0%, rgba(5, 5, 5, 0.70) 50%, rgba(5, 5, 5, 0.90) 100%),
+    url('doomsday-contact-bg.jpg') center center / cover no-repeat;
 }
 
 .contact-bg-text {
@@ -2727,7 +2758,7 @@ body:has(button:hover) .cur-outer {
   transform: translateY(-50%);
   font-family: var(--ff-title);
   font-size: clamp(4rem, 12vw, 10rem);
-  color: rgba(0, 255, 136, 0.02);
+  color: rgba(0, 255, 136, 0.04);
   letter-spacing: 10px;
   pointer-events: none;
   user-select: none;
