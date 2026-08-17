@@ -3208,19 +3208,26 @@ body:has(button:hover) .cur-outer {
   }
 
   .hero-ctas {
+    display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     max-width: 290px;
     margin: 0 auto;
     gap: 0.75rem;
   }
   .btn-doom,
+  .btn-ghost,
   .btn-secondary {
     width: 100%;
+    display: flex;
+    align-items: center;
     justify-content: center;
+    text-align: center;
     padding: 0.85rem 1.2rem;
-    font-size: 0.72rem;
-    letter-spacing: 1.5px;
+    font-size: 0.74rem;
+    letter-spacing: 2px;
     box-sizing: border-box;
   }
 
@@ -3240,18 +3247,27 @@ body:has(button:hover) .cur-outer {
     padding: 3.5rem 0 4rem;
   }
   .about-manifesto {
-    margin-bottom: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2.5rem;
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .am-big {
     font-size: clamp(1.15rem, 4.2vw, 1.6rem);
     line-height: 1.45;
     margin-bottom: 1.2rem;
     word-break: break-word;
+    text-align: center;
   }
-  .am-lead {
+  .am-sub {
     font-size: 0.92rem;
     line-height: 1.55;
+    text-align: center;
   }
 
   .pillars {
