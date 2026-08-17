@@ -1780,33 +1780,37 @@ body:has(button:hover) .cur-outer {
 
 /* ── Tournament Stage Blocks ─────────────────────────────── */
 .ev-rule-stage {
-  background: rgba(5, 5, 5, 0.5);
-  border: 1px solid rgba(0, 255, 136, 0.15);
+  background: rgba(8, 12, 10, 0.85);
+  border: 1px solid rgba(0, 255, 136, 0.22);
+  border-left: 3px solid var(--neon);
   border-radius: 4px;
-  padding: 0.85rem 1rem;
+  padding: 0.9rem 1.1rem;
   margin-top: 0.75rem;
+  box-sizing: border-box;
 }
 
 .nt-strip .ev-rule-stage {
-  border-color: rgba(0, 194, 110, 0.15);
+  border-color: rgba(0, 194, 110, 0.22);
+  border-left-color: var(--em);
 }
 
 .ev-rule-stage-header {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 0.6rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .ev-stage-badge {
   font-family: var(--ff-mono);
-  font-size: 0.6rem;
+  font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   color: var(--neon);
   background: rgba(0, 255, 136, 0.12);
   border: 1px solid var(--border-neon);
-  padding: 0.2rem 0.65rem;
+  padding: 0.25rem 0.65rem;
   border-radius: 2px;
   text-transform: uppercase;
   flex-shrink: 0;
@@ -1814,23 +1818,57 @@ body:has(button:hover) .cur-outer {
 
 .ev-stage-badge-semi {
   color: #ffd070;
-  background: rgba(255, 200, 80, 0.1);
-  border-color: rgba(255, 200, 80, 0.35);
+  background: rgba(255, 200, 80, 0.12);
+  border-color: rgba(255, 200, 80, 0.4);
 }
 
 .ev-stage-badge-final {
   color: #ff7070;
-  background: rgba(255, 80, 80, 0.1);
-  border-color: rgba(255, 80, 80, 0.35);
+  background: rgba(255, 80, 80, 0.12);
+  border-color: rgba(255, 80, 80, 0.4);
 }
 
 .ev-stage-title {
   font-family: var(--ff-mono);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: var(--white);
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
+}
+
+.ev-rule-stage ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ev-rule-stage li {
+  font-size: 0.86rem;
+  color: #F1F5F9;
+  line-height: 1.55;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.ev-rule-stage li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--neon);
+  font-size: 0.8rem;
+}
+
+.nt-strip .ev-rule-stage li::before {
+  color: var(--em);
+}
+
+.ev-rule-stage li strong {
+  color: #FFFFFF;
+  font-weight: 700;
 }
 
 /* ── Match Bracket Flowchart ─────────────────────────────── */
@@ -1839,56 +1877,60 @@ body:has(button:hover) .cur-outer {
   flex-direction: column;
   gap: 0.6rem;
   margin-top: 0.6rem;
+  background: rgba(8, 12, 10, 0.75);
+  border: 1px solid rgba(0, 194, 110, 0.25);
+  border-radius: 4px;
+  padding: 0.85rem 1rem;
+  box-sizing: border-box;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ev-bracket-row {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  width: max-content;
 }
 
 .ev-bracket-node {
   font-family: var(--ff-mono);
   font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 1px;
-  padding: 0.35rem 0.8rem;
+  letter-spacing: 0.5px;
+  padding: 0.35rem 0.75rem;
   border-radius: 3px;
   border: 1px solid;
   text-transform: uppercase;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .ev-bracket-br {
   color: var(--neon);
   border-color: var(--border-neon);
-  background: rgba(0, 255, 136, 0.08);
+  background: rgba(0, 255, 136, 0.12);
 }
 
 .ev-bracket-semi {
   color: #ffd070;
-  border-color: rgba(255, 200, 80, 0.35);
-  background: rgba(255, 200, 80, 0.08);
+  border-color: rgba(255, 200, 80, 0.4);
+  background: rgba(255, 200, 80, 0.12);
 }
 
 .ev-bracket-final {
   color: #ff7070;
-  border-color: rgba(255, 80, 80, 0.35);
-  background: rgba(255, 80, 80, 0.08);
+  border-color: rgba(255, 80, 80, 0.4);
+  background: rgba(255, 80, 80, 0.12);
 }
 
 .ev-bracket-arrow {
   font-family: var(--ff-mono);
-  font-size: 0.9rem;
-  color: var(--silver-dim);
-  opacity: 0.6;
+  font-size: 0.95rem;
+  color: var(--em);
+  font-weight: 700;
   flex-shrink: 0;
-}
-
-@media (max-width: 600px) {
-  .ev-bracket-row { gap: 0.3rem; }
-  .ev-bracket-node { font-size: 0.6rem; padding: 0.3rem 0.5rem; }
 }
 
 
@@ -3435,31 +3477,34 @@ body:has(button:hover) .cur-outer {
     min-width: 0;
   }
   .ev-rule-group h4 {
-    font-size: 0.8rem;
+    font-size: 0.84rem;
     letter-spacing: 0.5px;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
     line-height: 1.35;
     word-break: break-word;
     white-space: normal;
     overflow-wrap: break-word;
   }
   .ev-rule-group ul {
-    padding-left: 1rem;
+    padding-left: 0;
+    list-style: none;
     box-sizing: border-box;
     width: 100%;
   }
   .ev-rule-group li {
-    font-size: 0.82rem;
-    line-height: 1.45;
-    margin-bottom: 0.35rem;
+    font-size: 0.84rem;
+    line-height: 1.55;
+    margin-bottom: 0.45rem;
+    padding-left: 1.2rem;
     word-break: break-word;
+    color: #F8FAFC;
   }
   .ev-rule-stage {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    padding: 0.75rem 0.8rem;
-    margin-top: 0.6rem;
+    padding: 0.85rem 0.9rem;
+    margin-top: 0.75rem;
     overflow: hidden;
     min-width: 0;
   }
@@ -3472,27 +3517,30 @@ body:has(button:hover) .cur-outer {
     width: 100%;
   }
   .ev-stage-badge {
-    font-size: 0.58rem;
-    padding: 0.2rem 0.55rem;
+    font-size: 0.6rem;
+    padding: 0.22rem 0.6rem;
     letter-spacing: 1px;
     flex-shrink: 0;
   }
   .ev-stage-title {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     letter-spacing: 0.5px;
     word-break: break-word;
     white-space: normal;
   }
   .ev-rule-stage ul {
-    padding-left: 1rem;
+    padding-left: 0;
+    list-style: none;
     box-sizing: border-box;
     width: 100%;
   }
   .ev-rule-stage li {
-    font-size: 0.82rem;
-    line-height: 1.45;
-    margin-bottom: 0.35rem;
+    font-size: 0.84rem;
+    line-height: 1.55;
+    margin-bottom: 0.4rem;
+    padding-left: 1.2rem;
     word-break: break-word;
+    color: #F8FAFC;
   }
   .ev-table-wrap {
     width: 100%;
@@ -3516,22 +3564,26 @@ body:has(button:hover) .cur-outer {
     max-width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    padding: 0.4rem 0;
+    padding: 0.75rem 0.8rem;
     box-sizing: border-box;
     display: block;
+    margin-top: 0.6rem;
   }
   .ev-bracket-row {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 0.3rem;
     width: max-content;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.5rem;
   }
   .ev-bracket-node {
-    font-size: 0.56rem;
-    padding: 0.25rem 0.5rem;
+    font-size: 0.62rem;
+    padding: 0.3rem 0.65rem;
     flex-shrink: 0;
     white-space: nowrap;
+  }
+  .ev-bracket-arrow {
+    font-size: 0.85rem;
   }
   .evp-pill-row {
     display: flex;
