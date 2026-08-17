@@ -2961,78 +2961,300 @@ body:has(button:hover) .cur-outer {
 }
 
 /* ================================================================
-   RESPONSIVE
+   RESPONSIVE (MOBILE & TABLET ADAPTIVE LAYOUT)
    ================================================================ */
-@media (max-width: 900px) {
+
+/* Tablet & Mobile (under 991px) */
+@media (max-width: 991px) {
   .hdr-nav { display: none; }
   .hdr-burger { display: flex; }
   body { cursor: auto; }
   .cur-outer, .cur-inner { display: none; }
 
-  /* Visible ambient green smoke, cosmic fog & canvas overlay on mobile */
+  /* Ambient Green Smoke & Fog Adjustments for Mobile */
   #bgCanvas {
+    opacity: 0.80;
+  }
+  .global-smoke {
     opacity: 0.85;
   }
-
-  .global-smoke {
-    opacity: 0.90;
-  }
-
   .gsmk-blob {
-    filter: blur(65px);
+    filter: blur(50px);
   }
-
-  .gsmk-1 {
-    width: 70vw;
-    height: 70vw;
-    background: radial-gradient(circle, rgba(0, 255, 136, 0.075) 0%, rgba(0, 194, 110, 0.03) 50%, transparent 75%);
-  }
-
-  .gsmk-2 {
-    width: 75vw;
-    height: 75vw;
-    background: radial-gradient(circle, rgba(0, 194, 110, 0.07) 0%, rgba(0, 255, 136, 0.025) 55%, transparent 80%);
-  }
-
-  .gsmk-3 {
-    width: 65vw;
-    height: 65vw;
-    background: radial-gradient(circle, rgba(0, 255, 136, 0.06) 0%, rgba(0, 194, 110, 0.02) 60%, transparent 78%);
-  }
-
   .sec-fog {
-    opacity: 0.35;
+    opacity: 0.30;
   }
-
   .fog-blob {
-    filter: blur(55px);
-    opacity: 0.30 !important;
+    filter: blur(45px);
+    opacity: 0.25 !important;
   }
 
-  .hero::after {
-    background:
-      /* Soft green ambient glow */
-      radial-gradient(ellipse 75% 55% at 50% 35%, rgba(0, 255, 136, 0.07) 0%, rgba(0, 194, 110, 0.025) 50%, transparent 75%),
-      /* Deep vignette keeping character & text sharp and clear */
-      radial-gradient(ellipse 85% 85% at 50% 50%, transparent 15%, rgba(5, 5, 5, 0.75) 100%),
-      /* Top & bottom fades */
-      linear-gradient(180deg, rgba(5, 5, 5, 0.95) 0%, rgba(5, 5, 5, 0.05) 20%, rgba(5, 5, 5, 0.05) 75%, rgba(5, 5, 5, 0.98) 100%);
+  /* Workshop Grid Fallback for Screen Widths under 992px */
+  .ws-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.2rem !important;
+  }
+  .ws-grid .ws-card {
+    grid-column: auto !important;
+    width: 100% !important;
+  }
+}
+
+/* Mobile & Small Screens (under 768px) */
+@media (max-width: 768px) {
+  /* Global Container Containment */
+  .container {
+    padding: 0 1rem;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+
+  /* Section Spacing & Slashes */
+  section {
+    padding: 3.5rem 0 4rem;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
+
+  .sec-slash {
+    padding: 1.8rem 1rem;
+    gap: 0.8rem;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+  .sec-slash span {
+    font-size: 0.58rem;
+    letter-spacing: 2px;
+  }
+
+  /* Section Headings */
+  .ev-heading {
+    font-size: clamp(1.8rem, 6.5vw, 2.8rem);
+    line-height: 1;
+    margin-bottom: 0.6rem;
+  }
+  .ev-code {
+    font-size: 0.62rem;
+    letter-spacing: 2px;
+  }
+  .ev-sub {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  /* ---- HERO SECTION MOBILE ---- */
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--nav-h) + 1.2rem);
+    padding-bottom: 2.5rem;
+    width: 100%;
+    overflow-x: hidden;
   }
 
   .hero::before {
     filter: brightness(0.40) saturate(0.70) contrast(1.05);
   }
 
-  /* About Section Mobile Spacing */
-  .about-sec { padding: 4rem 0 5rem; }
-  .about-manifesto { margin-bottom: 3rem; }
-  .am-big { font-size: clamp(1.4rem, 4vw, 2.2rem); line-height: 1.3; }
-  .pillars { margin-bottom: 3rem; }
+  .hero::after {
+    background:
+      radial-gradient(ellipse 75% 55% at 50% 35%, rgba(0, 255, 136, 0.07) 0%, rgba(0, 194, 110, 0.025) 50%, transparent 75%),
+      radial-gradient(ellipse 85% 85% at 50% 50%, transparent 15%, rgba(5, 5, 5, 0.75) 100%),
+      linear-gradient(180deg, rgba(5, 5, 5, 0.95) 0%, rgba(5, 5, 5, 0.05) 20%, rgba(5, 5, 5, 0.05) 75%, rgba(5, 5, 5, 0.98) 100%);
+  }
 
-  /* Event Strips Mobile */
-  .ev-strip { grid-template-columns: 60px 1fr; padding: 1.5rem; }
+  .hero-inner {
+    padding: 1.2rem 0.9rem 2rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
 
-  /* Stats Strip — Clean 2x2 Grid with Interior Borders on Mobile */
+  /* Hide overflowing HUD decorative corners and bottom wide strip */
+  .hud-corner {
+    display: none !important;
+  }
+  .hud-bot {
+    display: none !important;
+  }
+
+  .hud-top {
+    font-size: 0.5rem;
+    letter-spacing: 1px;
+    padding: 0.35rem 0.6rem;
+    gap: 0.4rem;
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .hero-pre {
+    margin-bottom: 1rem;
+    gap: 0.4rem;
+    width: 100%;
+  }
+  .hp-line {
+    max-width: 30px;
+  }
+  .hp-txt {
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+  }
+
+  .hero-logo-container {
+    margin: 1rem 0 1.2rem;
+    width: 100%;
+  }
+  .hero-logo-img {
+    width: 88vw;
+    max-width: 340px;
+    height: auto;
+  }
+
+  .hero-tagline {
+    font-size: clamp(1.2rem, 5.5vw, 1.8rem);
+    letter-spacing: 3px;
+    gap: 0.25em;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    width: 100%;
+  }
+  .htag-dash {
+    display: none !important;
+  }
+
+  .hero-meta {
+    flex-direction: column;
+    width: 100%;
+    max-width: 330px;
+    margin: 0 auto 1.8rem;
+    box-sizing: border-box;
+  }
+  .hm-item {
+    padding: 0.7rem 0.8rem;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .hm-divider {
+    width: 100%;
+    height: 1px;
+  }
+  .hmi-label {
+    font-size: 0.52rem;
+    letter-spacing: 1.5px;
+  }
+  .hmi-val {
+    font-size: 0.92rem;
+    line-height: 1.35;
+    word-break: break-word;
+  }
+
+  .countdown-wrap {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    margin-bottom: 1.8rem;
+  }
+  .countdown {
+    gap: 0.25rem;
+    justify-content: center;
+    max-width: 100%;
+  }
+  .cd-top {
+    width: clamp(52px, 15vw, 68px);
+    height: clamp(50px, 14vw, 64px);
+  }
+  .cd-num {
+    font-size: clamp(1.3rem, 4.5vw, 1.75rem);
+  }
+  .cd-label {
+    font-size: 0.48rem;
+    letter-spacing: 1px;
+  }
+  .cd-dots {
+    gap: 3px;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    width: 100%;
+    max-width: 290px;
+    margin: 0 auto;
+    gap: 0.75rem;
+  }
+  .btn-doom,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 0.85rem 1.2rem;
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    box-sizing: border-box;
+  }
+
+  /* ---- MARQUEE ---- */
+  .marquee-wrap {
+    padding: 0.7rem 0;
+    max-width: 100vw;
+    overflow: hidden;
+  }
+  .marquee-track span {
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+  }
+
+  /* ---- ABOUT SECTION ---- */
+  .about-sec {
+    padding: 3.5rem 0 4rem;
+  }
+  .about-manifesto {
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+  .am-big {
+    font-size: clamp(1.15rem, 4.2vw, 1.6rem);
+    line-height: 1.45;
+    margin-bottom: 1.2rem;
+    word-break: break-word;
+  }
+  .am-lead {
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .pillars {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    width: 100%;
+  }
+  .pillar {
+    grid-template-columns: 42px 1fr;
+    gap: 0.8rem;
+    padding: 1.2rem 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .pil-num {
+    font-size: 1.6rem;
+  }
+  .pil-title {
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+  }
+  .pil-desc {
+    font-size: 0.84rem;
+    line-height: 1.45;
+  }
+
+  /* Stats Strip 2x2 Clean Grid */
   .stat-strip {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -3053,8 +3275,8 @@ body:has(button:hover) .cur-outer {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 1.2rem 0.6rem;
-    gap: 0.35rem;
+    padding: 1.1rem 0.5rem;
+    gap: 0.3rem;
     box-sizing: border-box;
     width: 100%;
     border: none;
@@ -3069,95 +3291,352 @@ body:has(button:hover) .cur-outer {
     border-bottom: none;
   }
   .ss-num {
-    font-size: clamp(1.8rem, 5.5vw, 2.5rem);
-    text-align: center;
+    font-size: clamp(1.8rem, 5.5vw, 2.3rem);
     line-height: 1;
   }
   .ss-label {
-    font-size: 0.58rem;
+    font-size: 0.55rem;
     letter-spacing: 1px;
-    text-align: center;
     line-height: 1.25;
   }
 
-  .sched-log { margin-left: 40px; padding-left: 1.5rem; }
-  .sl-entry { grid-template-columns: 90px auto 1fr; }
-  .sl-tag { display: none; }
-}
-
-@media (max-width: 600px) {
-  #bgCanvas {
-    opacity: 0.80;
+  /* ---- TECHNICAL & NON-TECH EVENTS ---- */
+  .events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    width: 100%;
   }
-  .global-smoke {
-    opacity: 0.85;
-  }
-  .sec-fog {
-    opacity: 0.30;
-  }
-  .fog-blob {
-    filter: blur(45px);
-    opacity: 0.25 !important;
-  }
-
-  .about-sec { padding: 3rem 0 3.5rem; }
-  .about-manifesto { margin-bottom: 2rem; }
-  .pillars { margin-bottom: 2rem; }
-
-  .hero-meta { flex-direction: column; width: 100%; }
-  .hm-divider { width: 80%; height: 1px; }
-  .countdown { gap: 0.4rem; }
-  .cd-top { width: 70px; height: 65px; }
-  .cd-num { font-size: 1.8rem; }
-
-  /* Event Card Mobile Alignment */
   .ev-strip {
     grid-template-columns: 1fr;
-    padding: 1.3rem 1rem;
-  }
-  .evs-num { display: none; }
-  .evs-body { padding: 0; width: 100%; }
-
-  .evs-title-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.6rem;
-    width: 100%;
-  }
-  .evs-tags {
-    margin-left: 0;
-    width: 100%;
-  }
-
-  .ev-rules-accordion {
+    padding: 1.2rem 1rem;
     width: 100%;
     box-sizing: border-box;
   }
+  .evs-num {
+    display: none !important;
+  }
+  .evs-body {
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .evs-title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    width: 100%;
+    margin-bottom: 0.6rem;
+  }
+  .evs-emoji {
+    font-size: 1.5rem;
+  }
+  .evs-title-group {
+    width: 100%;
+  }
+  .evs-name {
+    font-size: clamp(1.3rem, 5vw, 1.8rem);
+    line-height: 1.1;
+    margin-bottom: 0.2rem;
+  }
+  .evs-subnote {
+    font-size: 0.62rem;
+    letter-spacing: 1.5px;
+  }
+  .evs-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    width: 100%;
+    margin: 0;
+  }
+  .etag {
+    font-size: 0.56rem;
+    padding: 0.2rem 0.55rem;
+    letter-spacing: 0.5px;
+  }
+  .evs-desc {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin-bottom: 0.8rem;
+    width: 100%;
+  }
+  .ev-rules-accordion {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 0.8rem;
+  }
+  .ev-rules-trigger {
+    font-size: 0.66rem;
+    letter-spacing: 0.8px;
+    padding: 0.75rem 0.85rem;
+    width: 100%;
+    box-sizing: border-box;
+    gap: 0.4rem;
+  }
   .ev-rules-body {
-    padding: 1.2rem 0.9rem;
+    padding: 1.1rem 0.8rem;
+    width: 100%;
+    box-sizing: border-box;
   }
-
-  /* Stats Strip Compact 2x2 Grid */
-  .ss-item {
-    padding: 1.1rem 0.5rem;
+  .ev-rule-group {
+    margin-bottom: 1.1rem;
+    width: 100%;
+  }
+  .ev-rule-group h4 {
+    font-size: 0.82rem;
+    letter-spacing: 0.8px;
+    margin-bottom: 0.5rem;
+  }
+  .ev-rule-group ul {
+    padding-left: 1.1rem;
+  }
+  .ev-rule-group li {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    margin-bottom: 0.3rem;
+  }
+  .ev-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0.8rem 0;
+  }
+  .ev-criteria-table {
+    width: 100%;
+    min-width: 250px;
+    font-size: 0.76rem;
+  }
+  .ev-criteria-table th,
+  .ev-criteria-table td {
+    padding: 0.45rem 0.55rem;
+  }
+  .ev-match-bracket {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.4rem;
+  }
+  .ev-bracket-row {
+    gap: 0.25rem;
+    flex-wrap: nowrap;
+    min-width: max-content;
+  }
+  .ev-bracket-node {
+    font-size: 0.58rem;
+    padding: 0.25rem 0.5rem;
+    flex-shrink: 0;
+  }
+  .evp-pill-row {
+    display: flex;
+    flex-wrap: wrap;
     gap: 0.3rem;
+    width: 100%;
   }
-  .ss-num {
-    font-size: 2rem;
+  .evp-pill {
+    font-size: 0.56rem;
+    padding: 0.22rem 0.5rem;
+    letter-spacing: 0.5px;
   }
-  .ss-label {
+  .ev-rule-important {
+    padding: 0.85rem 0.8rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* ---- WORKSHOP SECTION ---- */
+  .workshop-sec {
+    padding: 3.5rem 0 4rem;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  .ws-wrapper {
+    padding: 1.5rem 0.9rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .ws-badge-row {
+    gap: 0.35rem;
+    margin-bottom: 0.8rem;
+  }
+  .ws-badge {
+    font-size: 0.56rem;
+    padding: 0.22rem 0.55rem;
+    letter-spacing: 0.8px;
+  }
+  .ws-heading {
+    font-size: clamp(1.5rem, 5.5vw, 2.2rem);
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+    word-break: break-word;
+  }
+  .ws-tagline-sub {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 1.2rem;
+  }
+  .ws-callout {
+    padding: 1.1rem 0.85rem;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 1.5rem;
+  }
+  .ws-callout-title {
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+  }
+  .ws-callout-txt {
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+  .ws-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    margin-bottom: 2rem !important;
+    width: 100% !important;
+  }
+  .ws-grid .ws-card {
+    grid-column: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 1.3rem 0.95rem !important;
+  }
+  .ws-dress-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+    width: 100% !important;
+  }
+  .ws-dress-col {
+    padding: 0.75rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .ws-list li,
+  .ws-list-sub li {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+  .ws-action-box {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 1.2rem !important;
+    padding-top: 1.5rem !important;
+    text-align: center !important;
+  }
+  .ws-meta {
+    flex-direction: column !important;
+    gap: 0.4rem !important;
+    align-items: center !important;
+    text-align: center !important;
+    font-size: 0.75rem !important;
+  }
+  .wsm-sep {
+    display: none !important;
+  }
+  .ws-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* ---- SCHEDULE SECTION ---- */
+  .sched-sec {
+    padding: 3.5rem 0 4rem;
+  }
+  .sched-log {
+    margin-left: 12px;
+    padding-left: 0.8rem;
+  }
+  .sl-entry {
+    grid-template-columns: 72px auto 1fr;
+    gap: 0.5rem;
+    padding: 0.85rem 0.65rem;
+  }
+  .sl-tag {
+    display: none !important;
+  }
+  .sl-time {
+    font-size: 0.64rem;
+  }
+  .sl-body h4 {
+    font-size: 0.82rem;
+  }
+  .sl-body p {
+    font-size: 0.76rem;
+    line-height: 1.35;
+  }
+
+  /* ---- REGISTRATION SECTION ---- */
+  .reg-sec {
+    padding: 3.5rem 0 4rem;
+  }
+  .reg-inner {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+    width: 100%;
+  }
+  .reg-fee-card {
+    padding: 1.4rem 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .fee-num {
+    font-size: 2.6rem;
+  }
+  .reg-qr-card {
+    padding: 1.4rem 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .qr-img {
+    width: 145px;
+    height: 145px;
+  }
+
+  /* ---- COORDINATORS SECTION ---- */
+  .contact-sec {
+    padding: 3.5rem 0 4rem;
+  }
+  .contact-header {
+    margin-bottom: 2rem;
+  }
+  .coord-layout {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+    width: 100%;
+  }
+  .coord-list-grid {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+    width: 100%;
+  }
+  .coord-agent {
+    padding: 0.75rem 0.85rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .ca-name {
+    font-size: 0.82rem;
+  }
+  .ca-phone {
+    font-size: 0.72rem;
+  }
+
+  /* ---- FOOTER ---- */
+  .site-footer {
+    padding: 2.5rem 0 1.5rem;
+  }
+  .sf-nav {
+    gap: 0.4rem 1rem;
+  }
+  .sf-copy {
     font-size: 0.55rem;
+    padding: 0 1rem;
+    text-align: center;
   }
-
-  .hero-tagline {
-    letter-spacing: 4px;
-    gap: 0.35em;
-  }
-
-  .pillar { grid-template-columns: 45px 1fr; gap: 0.8rem; }
-  .pil-num { font-size: 1.8rem; }
-  .sl-entry { grid-template-columns: 75px auto 1fr; }
-  .ev-intro { padding: 0 1rem; }
 }
 
 /* ================================================================
