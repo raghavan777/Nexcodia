@@ -1445,7 +1445,7 @@ body:has(button:hover) .cur-outer {
 }
 
 .ev-intro {
-  padding: 0 2rem;
+  padding: 0;
   max-width: 1200px;
   margin: 0 auto 3rem;
 }
@@ -3032,19 +3032,44 @@ body:has(button:hover) .cur-outer {
     letter-spacing: 2px;
   }
 
-  /* Section Headings */
+  /* Section Headings & Intro Blocks — Centered on Mobile */
+  .ev-intro,
+  .sched-header,
+  .contact-header,
+  .reg-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0 auto 2rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
   .ev-heading {
     font-size: clamp(1.8rem, 6.5vw, 2.8rem);
-    line-height: 1;
+    line-height: 1.05;
     margin-bottom: 0.6rem;
+    text-align: center;
+    width: 100%;
   }
+
   .ev-code {
     font-size: 0.62rem;
     letter-spacing: 2px;
+    text-align: center;
+    margin: 0 auto 0.5rem;
   }
+
   .ev-sub {
     font-size: 0.9rem;
     line-height: 1.5;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 90%;
   }
 
   /* ---- HERO SECTION MOBILE ---- */
