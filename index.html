@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXCODIA '26 — Doom Has Arrived</title>
+  <meta name="description"
+    content="NEXCODIA '26 — Annual National Level Technical Symposium, Velammal Institute of Technology, Dept. of CSE. Marvel Avengers Doomsday Theme." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Russo+One&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Rajdhani:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ========================================================
+       DOOMSDAY CINEMATIC PRELOADER
+  ======================================================== -->
+  <div id="preloader" class="preloader">
+    <!-- Green Fog Smoke Overlay -->
+    <div class="pl-fog" aria-hidden="true">
+      <div class="pl-fog-blob pl-fog-1"></div>
+      <div class="pl-fog-blob pl-fog-2"></div>
+      <div class="pl-fog-blob pl-fog-3"></div>
+    </div>
+    <div class="pl-glow"></div>
+    <div class="pl-container">
+      <div class="pl-badge"><span>VELAMMAL CSE PRESENTS</span></div>
+      <div class="pl-logo">
+        <div class="pl-avengers-symbol" aria-hidden="true">
+          <svg viewBox="0 0 140 140" class="pl-a-svg">
+            <circle cx="70" cy="70" r="56" fill="none" stroke="url(#aGrad)" stroke-width="7" class="pl-ring" />
+            <path d="M44,106 L44,34 L96,106 L96,34" fill="none" stroke="url(#aGrad)" stroke-width="7"
+              stroke-linecap="square" stroke-linejoin="miter" />
+            <defs>
+              <linearGradient id="aGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00FF88" />
+                <stop offset="40%" stop-color="#FFFFFF" />
+                <stop offset="70%" stop-color="#B7BEC7" />
+                <stop offset="100%" stop-color="#00C26E" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h1 class="pl-main-title">NEXCODIA</h1>
+        <div class="pl-sub-block">
+          <span class="pl-sub-title">DOOMSDAY '26</span>
+          <div class="pl-sub-bar"></div>
+        </div>
+      </div>
+      <div class="pl-loader-bar">
+        <div class="pl-fill" id="plFill"></div>
+      </div>
+      <div class="pl-counter">
+        <span id="plCount">0</span>%
+      </div>
+    </div>
+  </div>
+
+  <!-- NOISE OVERLAY -->
+  <div class="noise" aria-hidden="true"></div>
+
+  <!-- SCANLINES -->
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- CURSOR -->
+  <div class="cur-outer" id="curOuter"></div>
+  <div class="cur-inner" id="curInner"></div>
+
+  <!-- CANVAS: Global Green Fog & Embers -->
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- GLOBAL AMBIENT GREEN SMOKE OVERLAY -->
+  <div class="global-smoke" aria-hidden="true">
+    <div class="gsmk-blob gsmk-1"></div>
+    <div class="gsmk-blob gsmk-2"></div>
+    <div class="gsmk-blob gsmk-3"></div>
+  </div>
+
+  <!-- LIGHTNING CANVAS: Hero section -->
+  <canvas id="lightningCanvas"></canvas>
+
+  <!-- ========================================================
+       NAVBAR
+  ======================================================== -->
+  <header class="hdr" id="hdr">
+    <div class="hdr-wrap">
+      <a href="#hero" class="hdr-logo">
+        <img src="nexcodia-logo-transparent.png" alt="Nexcodia Doomsday Logo" class="hdr-brand-logo" />
+      </a>
+      <nav class="hdr-nav">
+        <a href="#about" class="hn">About</a>
+        <a href="#tech-events" class="hn">Technical</a>
+        <a href="#workshop" class="hn">Workshop</a>
+        <a href="#nontech-events" class="hn">Non-Tech</a>
+        <a href="#schedule" class="hn">Schedule</a>
+        <a href="#contact" class="hn">Contact</a>
+        <a href="#register" class="hn hn-reg">Register</a>
+      </nav>
+      <button class="hdr-burger" id="hdrBurger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBILE NAV -->
+  <div class="mob-nav" id="mobNav">
+    <a href="#about" class="mn-item">About</a>
+    <a href="#tech-events" class="mn-item">Technical</a>
+    <a href="#workshop" class="mn-item">Workshop</a>
+    <a href="#nontech-events" class="mn-item">Non-Technical</a>
+    <a href="#schedule" class="mn-item">Schedule</a>
+    <a href="#register" class="mn-item">Register</a>
+    <a href="#contact" class="mn-item">Contact</a>
+  </div>
+
+  <!-- ========================================================
+       HERO
+  ======================================================== -->
+  <section id="hero" class="hero">
+
+    <!-- Section Green Fog Smoke Overlay -->
+    <div class="sec-fog" aria-hidden="true">
+      <div class="fog-blob fog-a"></div>
+      <div class="fog-blob fog-b"></div>
+      <div class="fog-blob fog-c"></div>
+    </div>
+
+    <!-- Hex Grid -->
+    <div class="hex-grid" aria-hidden="true" id="hexGrid"></div>
+
+    <!-- Energy beams -->
+    <div class="beams" aria-hidden="true">
+      <div class="beam beam-1"></div>
+      <div class="beam beam-2"></div>
+      <div class="beam beam-3"></div>
+    </div>
+
+    <!-- Corner HUD marks -->
+    <div class="hud-corner hc-tl" aria-hidden="true"></div>
+    <div class="hud-corner hc-tr" aria-hidden="true"></div>
+    <div class="hud-corner hc-bl" aria-hidden="true"></div>
+    <div class="hud-corner hc-br" aria-hidden="true"></div>
+
+    <!-- HUD data strips -->
+    <div class="hud-strip hud-top" aria-hidden="true">
+      <span>SYS::NEXCODIA_26</span>
+      <span class="hs-sep">|</span>
+      <span>STATUS: ACTIVE</span>
+      <span class="hs-sep">|</span>
+      <span class="hs-blink">● LIVE</span>
+    </div>
+    <div class="hud-strip hud-bot" aria-hidden="true">
+      <span>VELAMMAL INSTITUTE OF TECHNOLOGY — CSE DEPT.</span>
+      <span class="hs-sep">|</span>
+      <span>NATIONAL LEVEL SYMPOSIUM</span>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-pre">
+        <span class="hp-line"></span>
+        <span class="hp-txt" id="typedText"></span>
+        <span class="hp-cursor">_</span>
+        <span class="hp-line"></span>
+      </div>
+
+      <div class="hero-logo-container">
+        <img src="nexcodia-logo-transparent.png" alt="Nexcodia Doomsday Official Logo" class="hero-logo-img" />
+      </div>
+
+      <p class="hero-tagline">
+        <span class="htag-dash htag-dash-l"></span>
+        <span class="htag-word" style="--i:0">DOOM</span>
+        <span class="htag-word htag-has" style="--i:1">HAS</span>
+        <span class="htag-word" style="--i:2">ARRIVED.</span>
+        <span class="htag-dash htag-dash-r"></span>
+      </p>
+
+      <div class="hero-meta">
+        <div class="hm-item">
+          <span class="hmi-label">DAY OF RECKONING</span>
+          <span class="hmi-val">September 19, 2026</span>
+        </div>
+        <div class="hm-divider"></div>
+        <div class="hm-item">
+          <span class="hmi-label">LOCATION</span>
+          <span class="hmi-val">Velammal Institute Of Technology, Chennai</span>
+        </div>
+        <div class="hm-divider"></div>
+        <div class="hm-item">
+          <span class="hmi-label">ENTRY</span>
+          <span class="hmi-val">₹200</span>
+        </div>
+      </div>
+
+      <!-- Countdown -->
+      <div class="countdown-wrap">
+        <audio id="cdAudio" preload="auto">
+          <source src="tick-sound.wav" type="audio/wav" />
+        </audio>
+        <div class="countdown" role="timer">
+          <div class="cd-box">
+            <div class="cd-top">
+              <span class="cd-num" id="cdDays">00</span>
+            </div>
+            <span class="cd-label">DAYS</span>
+          </div>
+          <div class="cd-dots"><span></span><span></span></div>
+          <div class="cd-box">
+            <div class="cd-top">
+              <span class="cd-num" id="cdHours">00</span>
+            </div>
+            <span class="cd-label">HRS</span>
+          </div>
+          <div class="cd-dots"><span></span><span></span></div>
+          <div class="cd-box">
+            <div class="cd-top">
+              <span class="cd-num" id="cdMin">00</span>
+            </div>
+            <span class="cd-label">MIN</span>
+          </div>
+          <div class="cd-dots"><span></span><span></span></div>
+          <div class="cd-box">
+            <div class="cd-top">
+              <span class="cd-num" id="cdSec">00</span>
+            </div>
+            <span class="cd-label">SEC</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-ctas">
+        <a href="#register" class="btn-doom" id="heroRegBtn">
+          <span class="bd-bg"></span>
+          <span class="bd-text">REGISTER NOW</span>
+          <span class="bd-arrow">→</span>
+        </a>
+        <a href="#tech-events" class="btn-ghost">
+          <span>EXPLORE EVENTS</span>
+          <span class="bg-underline"></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       MARQUEE DIVIDER
+  ======================================================== -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      <span>NEXCODIA '26</span><span class="mq-dot">✦</span>
+      <span>DOOM HAS ARRIVED</span><span class="mq-dot">✦</span>
+      <span>AVENGERS DOOMSDAY</span><span class="mq-dot">✦</span>
+      <span>VELAMMAL INSTITUTE OF TECHNOLOGY CSE SYMPOSIUM</span><span class="mq-dot">✦</span>
+      <span>SEPTEMBER 19, 2026</span><span class="mq-dot">✦</span>
+      <span>NEXCODIA '26</span><span class="mq-dot">✦</span>
+      <span>DOOM HAS ARRIVED</span><span class="mq-dot">✦</span>
+      <span>AVENGERS DOOMSDAY</span><span class="mq-dot">✦</span>
+      <span>VELAMMAL INSTITUTE OF TECHNOLOGY CSE SYMPOSIUM</span><span class="mq-dot">✦</span>
+      <span>SEPTEMBER 19, 2026</span><span class="mq-dot">✦</span>
+      <span>NEXCODIA '26</span><span class="mq-dot">✦</span>
+      <span>DOOM HAS ARRIVED</span><span class="mq-dot">✦</span>
+      <span>AVENGERS DOOMSDAY</span><span class="mq-dot">✦</span>
+      <span>VELAMMAL INSTITUTE OF TECHNOLOGY CSE SYMPOSIUM</span><span class="mq-dot">✦</span>
+      <span>SEPTEMBER 19, 2026</span><span class="mq-dot">✦</span>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       ABOUT
+  ======================================================== -->
+  <section id="about" class="about-sec">
+    <div class="about-bg-text" aria-hidden="true">DOOM</div>
+    <div class="container">
+
+      <div class="about-manifesto reveal-up">
+        <p class="am-big"><span class="am-accent">NEXCODIA</span> is the Annual National Level Technical Symposium of
+          the Department of Computer Science &amp; Engineering at Velammal Institute of Technology.</p>
+        <p class="am-sub">Where the finest minds converge to compete, collaborate, and conquer. This is not just a
+          symposium — <em>this is a crucible.</em></p>
+      </div>
+
+      <!-- Three pillars -->
+      <div class="pillars">
+        <div class="pillar reveal-left" style="--pd:0s">
+          <div class="pil-num">01</div>
+          <div class="pil-body">
+            <h3>THE INSTITUTION</h3>
+            <p>Velammal Institute of Technology — forging engineers who think beyond boundaries and lead with absolute
+              purpose.</p>
+          </div>
+          <div class="pil-line"></div>
+        </div>
+        <div class="pillar reveal-left" style="--pd:0.12s">
+          <div class="pil-num">02</div>
+          <div class="pil-body">
+            <h3>THE DEPARTMENT</h3>
+            <p>CSE — producing technically superior engineers with innovative thinking and ethical values ready to shape
+              the digital future.</p>
+          </div>
+          <div class="pil-line"></div>
+        </div>
+        <div class="pillar reveal-left" style="--pd:0.24s">
+          <div class="pil-num">03</div>
+          <div class="pil-body">
+            <h3>THE BATTLE</h3>
+            <p>9 events. 1 day. Infinite possibilities. Battlegrounds that challenge the sharpest minds and reward the
+              boldest souls.</p>
+          </div>
+          <div class="pil-line"></div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stat-strip">
+        <div class="ss-item reveal-up" style="--pd:0s">
+          <span class="ss-num" data-target="6">0</span>
+          <span class="ss-label">Technical<br />Events</span>
+        </div>
+        <div class="ss-item reveal-up" style="--pd:0.1s">
+          <span class="ss-num" data-target="3">0</span>
+          <span class="ss-label">Non-Tech<br />Events</span>
+        </div>
+        <div class="ss-item reveal-up" style="--pd:0.2s">
+          <span class="ss-num" data-target="200" data-prefix="₹">0</span>
+          <span class="ss-label">Registration<br />Fee</span>
+        </div>
+        <div class="ss-item reveal-up" style="--pd:0.3s">
+          <span class="ss-num" data-target="1">0</span>
+          <span class="ss-label">Epic<br />Day</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION DIVIDER -->
+  <div class="sec-slash" aria-hidden="true">
+    <div class="ssl-left"></div>
+    <span>// TECHNICAL EVENTS</span>
+    <div class="ssl-right"></div>
+  </div>
+
+  <!-- ========================================================
+       TECHNICAL EVENTS — Full-width horizontal strips
+  ======================================================== -->
+  <section id="tech-events" class="events-sec">
+    <!-- Section Green Fog Smoke Overlay -->
+    <div class="sec-fog" aria-hidden="true">
+      <div class="fog-blob fog-a"></div>
+      <div class="fog-blob fog-b"></div>
+    </div>
+    <div class="container">
+      <div class="ev-intro reveal-up">
+        <span class="ev-code">T — SECTOR</span>
+        <h2 class="ev-heading">Technical<br /><span class="ev-accent">Battlegrounds</span></h2>
+        <p class="ev-sub">Unleash your intellect. Conquer the arena of logic, code and innovation.</p>
+      </div>
+    </div>
+
+    <div class="ev-strips">
+
+      <!-- Technical Event 1: Quiz Arena (Tech Quiz) -->
+      <div class="ev-strip tech-strip reveal-up" style="--pd:0s">
+        <div class="evs-num">T01</div>
+        <div class="evs-body">
+          <div class="evs-title-row">
+            <span class="evs-emoji">📜</span>
+            <div class="evs-title-group">
+              <h3 class="evs-name">Quiz Arena</h3>
+              <span class="evs-subnote">[ TECH QUIZ ]</span>
+            </div>
+            <div class="evs-tags">
+              <span class="etag etag-adv">Advanced</span>
+              <span class="etag etag-team">3–4 Members</span>
+            </div>
+          </div>
+          <p class="evs-desc">Test your technical expertise across computer science and engineering domains through
+            challenging timed questions and problem-solving rounds.</p>
+
+          <!-- Rules & Guidelines Accordion -->
+          <details class="ev-rules-accordion">
+            <summary class="ev-rules-trigger">
+              <span>📋 EVENT RULES &amp; OFFICIAL GUIDELINES</span>
+              <span class="ev-rules-icon">▼</span>
+            </summary>
+            <div class="ev-rules-body">
+
+              <!-- Team Composition -->
+              <div class="ev-rule-group">
+                <h4>👥 Team Composition</h4>
+                <ul>
+                  <li>Each team must consist of <strong>3–4 members</strong>.</li>
+                  <li>Team members cannot be changed after registration.</li>
+                </ul>
+              </div>
+
+              <!-- General Rules -->
+              <div class="ev-rule-group">
+                <h4>📋 General Rules</h4>
+                <ul>
+                  <li>The total duration of the event is <strong>2 hours</strong>.</li>
+                  <li>The quiz consists of <strong>3 rounds</strong>.</li>
+                  <li>The quizmaster's decision will be <strong>final and binding</strong>.</li>
+                  <li>The use of mobile phones, smartwatches, or any electronic devices is <strong>strictly
+                      prohibited</strong>.</li>
+                  <li>Any form of malpractice or misconduct will lead to <strong>disqualification</strong>.</li>
+                </ul>
+              </div>
+
+              <!-- Round 1 -->
+              <div class="ev-rule-stage">
+                <div class="ev-rule-stage-header">
+                  <span class="ev-stage-badge">ROUND 1</span>
+                  <span class="ev-stage-title">Pass the Code</span>
+                </div>
+                <ul>
+                  <li>All <strong>3–4 registered team members</strong> can participate.</li>
+                  <li>This is a team-based technical quiz round.</li>
+                  <li>Qualified teams will proceed to Round 2 with <strong>2 members</strong>.</li>
+                </ul>
+              </div>
+
+              <!-- Round 2 -->
+              <div class="ev-rule-stage">
+                <div class="ev-rule-stage-header">
+                  <span class="ev-stage-badge ev-stage-badge-semi">ROUND 2</span>
+                  <span class="ev-stage-title">Tech Relay</span>
+                </div>
+                <ul>
+                  <li>Only <strong>2 members</strong> from each qualified team can participate.</li>
+                  <li>This round will assess technical knowledge, logical thinking, and teamwork.</li>
+                  <li>Qualified teams will proceed to the final round with <strong>1 member</strong>.</li>
+                </ul>
+              </div>
+
+              <!-- Round 3 -->
+              <div class="ev-rule-stage">
+                <div class="ev-rule-stage-header">
+                  <span class="ev-stage-badge ev-stage-badge-final">ROUND 3</span>
+                  <span class="ev-stage-title">The Tech Escape — Final Round</span>
+                </div>
+                <ul>
+                  <li><strong>1 member</strong> will represent the team in the final round.</li>
+                  <li>The finalist will compete individually on behalf of the team.</li>
+                  <li>The team with the highest final score will be declared the <strong>Winner</strong>.</li>
+                </ul>
+              </div>
+
+              <!-- Final Command -->
+              <div class="ev-rule-group ev-rule-important">
+                <h4>📜 FINAL COMMAND</h4>
+                <div class="evp-pill-row">
+                  <span class="evp-pill">PASS THE CODE</span>
+                  <span class="evp-pill">TECH RELAY</span>
+                  <span class="evp-pill">THE TECH ESCAPE</span>
+                  <span class="evp-pill">CLAIM THE CROWN</span>
+                </div>
+                <p class="ev-final-note">QUIZ ARENA &mdash; Only the sharpest minds survive all 3 rounds.</p>
+              </div>
+
+            </div>
+          </details>
+
+        </div>
+        <div class="evs-glow"></div>
+        <div class="evs-bar"></div>
+      </div>
+
+      <!-- Technical Event 2: The Dooms Paper (Paper Presentation) -->
+      <div class="ev-strip tech-strip alt-strip reveal-up" style="--pd:0.06s">
+        <div class="evs-num">T02</div>
+        <div class="evs-body">
+          <div class="evs-title-row">
+            <span class="evs-emoji">📊</span>
+            <div class="evs-title-group">
+              <h3 class="evs-name">The Dooms Paper</h3>
+              <span class="evs-subnote">[ PAPER PRESENTATION ]</span>
+            </div>
+            <div class="evs-tags">
+              <span class="etag etag-mid">Intermediate</span>
+              <span class="etag etag-team">1–4 Members</span>
+            </div>
+          </div>
+          <p class="evs-desc">Create and present innovative technical ideas, research concepts, and technological
+            solutions using impactful slides to impress judges and audience.</p>
+
+          <!-- Rules & Guidelines Accordion -->
+          <details class="ev-rules-accordion">
+            <summary class="ev-rules-trigger">
+              <span>📋 EVENT RULES & OFFICIAL GUIDELINES</span>
+              <span class="ev-rules-icon">▼</span>
+            </summary>
+            <div class="ev-rules-body">
+
+              <!-- Section 1: Team -->
+              <div class="ev-rule-group">
+                <h4>👥 1. Team</h4>
+                <ul>
+                  <li>A team can have <strong>1 to 4 members</strong>.</li>
+                  <li>All members must register before the deadline.</li>
+                  <li>Bring your <strong>College ID Card</strong>.</li>
+                </ul>
+              </div>
+
+              <!-- Section 2: Paper Submission -->
+              <div class="ev-rule-group">
+                <h4>📄 2. Paper Submission</h4>
+                <ul>
+                  <li>Submit your paper in <strong>PDF format</strong> before the deadline.</li>
+                  <li>Late submission may not be accepted.</li>
+                  <li>Your paper must be your own work.</li>
+                  <li>Do not copy from others or use false information.</li>
+                </ul>
+              </div>
+
+              <!-- Section 3: Presentation -->
+              <div class="ev-rule-group">
+                <h4>⏱️ 3. Presentation</h4>
+                <ul>
+                  <li>Each team gets <strong>2–3 minutes</strong> to present. Do not exceed the given time.</li>
+                  <li>Explain your main idea, how it works, important points and conclusion.</li>
+                  <li>Judges may ask questions after your presentation.</li>
+                  <li>Every team member should know about the paper.</li>
+                </ul>
+              </div>
+
+              <!-- Section 4: Laptop & Presentation -->
+              <div class="ev-rule-group">
+                <h4>💻 4. Laptop &amp; Presentation</h4>
+                <ul>
+                  <li>You can bring your own laptop.</li>
+                  <li>Laptop will be provided by the organizers if needed.</li>
+                  <li>Tell the coordinator in advance if you need a laptop.</li>
+                  <li>Keep your presentation ready in <strong>PPT/PPTX and PDF</strong>.</li>
+                  <li>Keep a backup copy of your presentation.</li>
+                </ul>
+              </div>
+
+              <!-- Section 5: Discipline -->
+              <div class="ev-rule-group">
+                <h4>⚖️ 5. Discipline</h4>
+                <ul>
+                  <li>Be respectful and well-behaved.</li>
+                  <li>Come to the venue before your presentation time.</li>
+                  <li>Keep silent when another team is presenting.</li>
+                  <li>Keep your mobile phone on <strong>silent mode</strong>.</li>
+                  <li>Do not touch or change technical equipment without permission.</li>
+                  <li>Follow the instructions given by the organizers.</li>
+                </ul>
+              </div>
+
+              <!-- Section 6: Marks -->
+              <div class="ev-rule-group">
+                <h4>📊 6. Marks — 100</h4>
+                <div class="ev-table-wrap">
+                  <table class="ev-criteria-table">
+                    <thead>
+                      <tr>
+                        <th>Criteria</th>
+                        <th class="th-marks">Marks</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Topic</td>
+                        <td>10</td>
+                      </tr>
+                      <tr>
+                        <td>Technical Content</td>
+                        <td>20</td>
+                      </tr>
+                      <tr>
+                        <td>Innovation</td>
+                        <td>20</td>
+                      </tr>
+                      <tr>
+                        <td>Methodology</td>
+                        <td>15</td>
+                      </tr>
+                      <tr>
+                        <td>Presentation</td>
+                        <td>15</td>
+                      </tr>
+                      <tr>
+                        <td>Time Management</td>
+                        <td>10</td>
+                      </tr>
+                      <tr>
+                        <td>Q&amp;A</td>
+                        <td>10</td>
+                      </tr>
+                      <tr class="tr-total">
+                        <td><strong>Total</strong></td>
+                        <td><strong>100</strong></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Section 7: Disqualification -->
+              <div class="ev-rule-group">
+                <h4>🚫 7. Disqualification</h4>
+                <p>A team may be disqualified for:</p>
+                <ul>
+                  <li>Copying or plagiarism.</li>
+                  <li>Cheating.</li>
+                  <li>Misbehaviour.</li>
+                  <li>Giving false information.</li>
+                  <li>Not following the rules.</li>
+                  <li>Exceeding the time limit without permission.</li>
+                </ul>
+              </div>
+
+              <!-- Important Notice -->
+              <div class="ev-rule-group ev-rule-important">
+                <h4>⚡ IMPORTANT</h4>
+                <div class="evp-pill-row">
+                  <span class="evp-pill">BE PREPARED</span>
+                  <span class="evp-pill">BE ON TIME</span>
+                  <span class="evp-pill">FOLLOW THE RULES</span>
+                  <span class="evp-pill">RESPECT OTHERS</span>
+                  <span class="evp-pill">STAY WITHIN 2–3 MINS</span>
+                </div>
+                <p class="ev-final-note">The decision of the judges and organizing committee will be final.</p>
+              </div>
+
+            </div>
+          </details>
+        </div>
+        <div class="evs-glow evs-glow-alt"></div>
+        <div class="evs-bar evs-bar-alt"></div>
+      </div>
+
+      <!-- Technical Event 3: Clash of Coders (Coding) -->
+      <div class="ev-strip tech-strip reveal-up" style="--pd:0.12s">
+        <div class="evs-num">T03</div>
+        <div class="evs-body">
+          <div class="evs-title-row">
+            <span class="evs-emoji">⚡</span>
+            <div class="evs-title-group">
+              <h3 class="evs-name">Clash of Coders</h3>
+              <span class="evs-subnote">[ CODEVENGERS ]</span>
+            </div>
+            <div class="evs-tags">
+              <span class="etag etag-adv">Advanced</span>
+              <span class="etag etag-team">1–3 Members</span>
+            </div>
+          </div>
+          <p class="evs-desc">Solve complex algorithmic challenges, speed coding tasks, and logic problems. Only the
+            sharpest syntax and cleanest code survive.</p>
+
+          <!-- Rules & Guidelines Accordion -->
+          <details class="ev-rules-accordion">
+            <summary class="ev-rules-trigger">
+              <span>📋 EVENT RULES &amp; OFFICIAL GUIDELINES</span>
+              <span class="ev-rules-icon">▼</span>
+            </summary>
+            <div class="ev-rules-body">
+
+              <!-- General Rules -->
+              <div class="ev-rule-group">
+                <h4>📋 General Rules</h4>
+                <ul>
+                  <li><strong>Team Size:</strong> 1–3 members per team.</li>
+                  <li>The Coding Event consists of <strong>2 Rounds</strong>.</li>
+                  <li>Any <strong>Programming Language</strong> is accepted.</li>
+                  <li><strong>System Support</strong> will be provided.</li>
+                  <li>Participants must complete all levels within the allotted time.</li>
+                  <li>Ensure your code is <strong>correct, optimized, and error-free</strong> before submitting.</li>
+                  <li>The <strong>Judges' Decision will be Final</strong>.</li>
+                </ul>
+              </div>
+
+              <!-- Round 1 -->
+              <div class="ev-rule-stage">
+                <div class="ev-rule-stage-header">
+                  <span class="ev-stage-badge">ROUND 1</span>
+                  <span class="ev-stage-title">Bug Hunt</span>
+                </div>
+                <ul>
+                  <li>Debug <strong>2 programming questions</strong> within <strong>15 minutes</strong>.</li>
+                  <li>Round 1 will be conducted in <strong>two batches</strong>.</li>
+                  <li>Qualified teams will advance to the <strong>Final Round</strong>.</li>
+                </ul>
+              </div>
+
+              <!-- Round 2 -->
+              <div class="ev-rule-stage">
+                <div class="ev-rule-stage-header">
+                  <span class="ev-stage-badge ev-stage-badge-final">ROUND 2</span>
+                  <span class="ev-stage-title">Code Clash — Final Round</span>
+                </div>
+                <ul>
+                  <li><strong>4 coding problems</strong> will be given to each team.</li>
+                  <li>Problem set: <strong>2 Easy + 1 Medium + 1 Hard</strong>.</li>
+                  <li>Time limit: <strong>45 minutes</strong>.</li>
+                  <li>The team with the best score wins the <strong>Championship</strong>.</li>
+                </ul>
+              </div>
+
+              <!-- Final Command -->
+              <div class="ev-rule-group ev-rule-important">
+                <h4>⚡ FINAL COMMAND</h4>
+                <div class="evp-pill-row">
+                  <span class="evp-pill">BUG HUNT</span>
+                  <span class="evp-pill">CODE CLASH</span>
+                  <span class="evp-pill">OPTIMIZE</span>
+                  <span class="evp-pill">CONQUER</span>
+                </div>
+                <p class="ev-final-note">CODEVENGERS &mdash; Only the cleanest code claims the crown.</p>
+              </div>
+
+            </div>
+          </details>
+
+        </div>
+        <div class="evs-glow"></div>
+        <div class="evs-bar"></div>
+      </div>
+
+      <!-- Technical Event 4: The Final Escape (Escape the Lab) -->
+      <div class="ev-strip tech-strip alt-strip reveal-up" style="--pd:0.18s">
+        <div class="evs-num">T04</div>
+        <div class="evs-body">
+          <div class="evs-title-row">
+            <span class="evs-emoji">🔐</span>
+            <div class="evs-title-group">
+              <h3 class="evs-name">The Final Escape</h3>
+              <span class="evs-subnote">[ ESCAPE THE LAB ]</span>
+            </div>
+            <div class="evs-tags">
+              <span class="etag etag-mid">Intermediate</span>
+              <span class="etag etag-team">3–4 Members</span>
+            </div>
+          </div>
+          <p class="evs-desc">Solve logical puzzles and coding challenges to unlock clues and escape the virtual
+            laboratory before time runs out. Work smart and fast!</p>
+
+          <!-- Rules & Guidelines Accordion -->
+          <details class="ev-rules-accordion">
+            <summary class="ev-rules-trigger">
+              <span>📋 EVENT RULES &amp; OFFICIAL GUIDELINES</span>
+              <span class="ev-rules-icon">▼</span>
+            </summary>
+            <div class="ev-rules-body">
+
+              <!-- Overview -->
+              <div class="ev-rule-group">
+                <h4>🧪 Event Overview</h4>
+                <ul>
+                  <li><strong>Format:</strong> 4 progressive tech-themed rounds — complete them all to escape the lab!
+                  </li>
+                  <li><strong>Team Size:</strong> 3 to 4 members per team across all rounds.</li>
+                  <li><strong>General:</strong> Judges' decision will be final in all rounds.</li>
+                </ul>
+              </div>
+
+              <!-- Round 1 -->
+              <div class="ev-rule-stage">
+                <div class="ev-rule-stage-header">
+                  <span class="ev-stage-badge">ROUND 1</span>
+                  <span class="ev-stage-title">Pixel Play — Tech Pictionary</span>
+                </div>
+                <ul>
+                  <li><strong>Team Size:</strong> 3 to 4 members.</li>
+                  <li><strong>Drawing:</strong> One member draws; teammates guess the tech term.</li>
+                  <li><strong>Restrictions:</strong> No talking, letters, or numbers while drawing.</li>
+                  <li><strong>Time Limit:</strong> Each word has a 60-second time limit.</li>
+                  <li><strong>Words:</strong> Tech-related terms, picked randomly.</li>
+                  <li><strong>Rule:</strong> Only the designated drawer may draw.</li>
+                  <li><strong>Scoring:</strong> Correct guess within time = 1 point.</li>
+                  <li><strong>Rotation:</strong> Drawer rotates every turn.</li>
+                  <li><strong>Support:</strong> System / whiteboard will be provided.</li>
+                </ul>
+              </div>
+
+              <!-- Round 2 -->
+              <div class="ev-rule-stage">
+                <div class="ev-rule-stage-header">
+                  <span class="ev-stage-badge ev-stage-badge-semi">ROUND 2</span>
+                  <span class="ev-stage-title">Circuit Spy — Tech Imposter</span>
+                </div>
+                <ul>
+                  <li><strong>Team Size:</strong> 3 to 4 members.</li>
+                  <li><strong>Setup:</strong> All members except one get the same tech term; the imposter secretly gets
+                    a fake term.</li>
+                  <li><strong>Clues:</strong> Each member gives one clue about their term; the imposter must bluff to
+                    avoid detection.</li>
+                  <li><strong>Discussion:</strong> Team discusses for 60 seconds after all clues are given.</li>
+                  <li><strong>Voting:</strong> One vote decides the suspected imposter.</li>
+                  <li><strong>Scoring:</strong> Correct guess = team point; undetected imposter = imposter point.</li>
+                  <li><strong>Format:</strong> Only one round per game.</li>
+                </ul>
+              </div>
+
+              <!-- Round 3 -->
+              <div class="ev-rule-stage">
+                <div class="ev-rule-stage-header">
+                  <span class="ev-stage-badge ev-stage-badge-semi">ROUND 3</span>
+                  <span class="ev-stage-title">Guess the Geek — Who Am I</span>
+                </div>
+                <ul>
+                  <li><strong>Team Size:</strong> 3 to 4 members.</li>
+                  <li><strong>Format:</strong> Clues about a tech figure or company are read one by one, from hardest to
+                    easiest.</li>
+                  <li><strong>Buzzing:</strong> Teams may buzz in anytime to answer.</li>
+                  <li><strong>Wrong Answer:</strong> Locks the team out for that round.</li>
+                  <li><strong>Scoring:</strong> Points decrease with each clue used.</li>
+                  <li><strong>Rule:</strong> No discussion allowed after buzzing in.</li>
+                  <li><strong>Timing:</strong> 10 seconds given per clue if no team buzzes.</li>
+                  <li><strong>System:</strong> Buzzer / hand-raise system will be used.</li>
+                </ul>
+              </div>
+
+              <!-- Round 4 -->
+              <div class="ev-rule-stage">
+                <div class="ev-rule-stage-header">
+                  <span class="ev-stage-badge ev-stage-badge-final">ROUND 4</span>
+                  <span class="ev-stage-title">Byte Hunt — Treasure Hunt</span>
+                </div>
+                <ul>
+                  <li><strong>Team Size:</strong> 3 to 4 members.</li>
+                  <li><strong>Checkpoints:</strong> 5 to 8 tech-themed checkpoints; each clue must be solved to reach
+                    the next.</li>
+                  <li><strong>Start:</strong> Teams start at staggered intervals.</li>
+                  <li><strong>Rule:</strong> No skipping checkpoints — volunteers verify answers at each stop.</li>
+                  <li><strong>Time Limit:</strong> 30 to 40 minutes total.</li>
+                  <li><strong>Phones:</strong> Allowed only for scanning QR codes.</li>
+                  <li><strong>Winner:</strong> Fastest team to finish wins.</li>
+                </ul>
+              </div>
+
+              <!-- Final Command -->
+              <div class="ev-rule-group ev-rule-important">
+                <h4>🔐 FINAL COMMAND</h4>
+                <div class="evp-pill-row">
+                  <span class="evp-pill">DRAW IT</span>
+                  <span class="evp-pill">SPY IT</span>
+                  <span class="evp-pill">GUESS IT</span>
+                  <span class="evp-pill">HUNT IT</span>
+                  <span class="evp-pill">ESCAPE!</span>
+                </div>
+                <p class="ev-final-note">THE FINAL ESCAPE &mdash; Only the sharpest minds break out of the lab.</p>
+              </div>
+
+            </div>
+          </details>
+
+        </div>
+        <div class="evs-glow evs-glow-alt"></div>
+        <div class="evs-bar evs-bar-alt"></div>
+      </div>
+
+      <!-- Technical Event 5: EndGame 01 (Project Expo) -->
+      <div class="ev-strip tech-strip reveal-up" style="--pd:0.24s">
+        <div class="evs-num">T05</div>
+        <div class="evs-body">
+          <div class="evs-title-row">
+            <span class="evs-emoji">💡</span>
+            <div class="evs-title-group">
+              <h3 class="evs-name">EndGame 01</h3>
+              <span class="evs-subnote">[ PROJECT EXPO ]</span>
+            </div>
+            <div class="evs-tags">
+              <span class="etag etag-adv">Software & Hardware</span>
+              <span class="etag etag-team">1–4 Members</span>
+            </div>
+          </div>
+          <p class="evs-desc">Showcase your working prototypes, hardware/software innovations, and creative tech
+            projects to expert evaluators and win grand prizes.</p>
+
+          <!-- Rules & Guidelines Accordion -->
+          <details class="ev-rules-accordion">
+            <summary class="ev-rules-trigger">
+              <span>📋 EVENT RULES & OFFICIAL GUIDELINES</span>
+              <span class="ev-rules-icon">▼</span>
+            </summary>
+            <div class="ev-rules-body">
+
+              <div class="ev-rule-group">
+                <h4>📋 Rules &amp; Regulations</h4>
+                <ul>
+                  <li><strong>Team Size:</strong> 1 to 4 members per team.</li>
+                  <li><strong>College ID:</strong> College ID Card is mandatory for all participants.</li>
+                  <li><strong>Project Type:</strong> Software (S/W) or Hardware (H/W) projects are accepted.</li>
+                  <li><strong>Equipment:</strong> Bring all required equipment (Laptop, Charger, Hardware, etc.).</li>
+                  <li><strong>Working Demo:</strong> Ensure your project is fully working before the demonstration.</li>
+                  <li><strong>Presentation:</strong> Clearly explain the Problem Statement, Solution, Technology Used,
+                    and Outcome.</li>
+                  <li><strong>Q&amp;A:</strong> Answer the Judges' Questions confidently and honestly.</li>
+                  <li><strong>Team Knowledge:</strong> Every Team Member should know the project and be able to explain
+                    it.</li>
+                  <li><strong>Conduct:</strong> Maintain Professional Behavior and follow the Symposium Rules.</li>
+                  <li><strong>Judges' Decision:</strong> The Judges' Decision will be <strong>Final</strong>.</li>
+                </ul>
+              </div>
+
+              <div class="ev-rule-group ev-rule-important">
+                <h4>⚡ FINAL COMMAND</h4>
+                <div class="evp-pill-row">
+                  <span class="evp-pill">BUILD IT</span>
+                  <span class="evp-pill">DEMO IT</span>
+                  <span class="evp-pill">DEFEND IT</span>
+                  <span class="evp-pill">WIN IT</span>
+                </div>
+                <p class="ev-final-note">ENDGAME 01 &mdash; Only the boldest innovations claim the podium.</p>
+              </div>
+
+            </div>
+          </details>
+
+        </div>
+        <div class="evs-glow"></div>
+        <div class="evs-bar"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION DIVIDER -->
+  <div class="sec-slash" aria-hidden="true">
+    <div class="ssl-left"></div>
+    <span>// FLAGSHIP WORKSHOP</span>
+    <div class="ssl-right"></div>
+  </div>
+
+  <!-- ========================================================
+       FLAGSHIP WORKSHOP — Dedicated Main Technical Event
+  ======================================================== -->
+  <section id="workshop" class="workshop-sec">
+    <div class="container">
+      <div class="ws-wrapper reveal-up">
+
+        <!-- Header Badge Row -->
+        <div class="ws-badge-row">
+          <span class="ws-badge">🔥 INCURSION // FLAGSHIP WORKSHOP</span>
+          <span class="ws-badge ws-badge-partner">CONDUCTED BY: YOTVIS</span>
+          <span class="ws-badge ws-badge-alt">TOTAL PARTICIPANTS: 45 STUDENTS</span>
+        </div>
+
+        <!-- Main Heading & Subtitle Tagline -->
+        <h2 class="ws-heading">INCURSION: <span class="ev-accent">AI AGENTS &amp; AUTOMATION</span></h2>
+        <p class="ws-tagline-sub">WHERE INTELLIGENCE MEETS ACTION</p>
+
+        <!-- Experience Overview Box -->
+        <div class="ws-callout">
+          <h3 class="ws-callout-title">✨ What You'll Experience</h3>
+          <p class="ws-callout-txt"><strong>Yotvis</strong> brings you a hands-on workshop exploring the next generation
+            of AI Agents and Automation.</p>
+          <p class="ws-callout-txt">AI is moving beyond simply answering questions. In this workshop, you'll explore how
+            <strong>AI Agents</strong> can think, plan, use tools, make decisions, and take action.
+          </p>
+          <p class="ws-callout-txt">You will learn the fundamentals of <strong>AI Agents and Automation</strong> and
+            gain practical experience by building and experimenting with <strong>real AI-powered workflows</strong>.</p>
+        </div>
+
+        <!-- Details Grid -->
+        <div class="ws-grid">
+
+          <!-- Card 1: You'll Explore -->
+          <div class="ws-card">
+            <div class="wsc-icon">🚀</div>
+            <h4>You'll Explore</h4>
+            <ul class="ws-list">
+              <li><strong>AI Agents:</strong> Learn how AI Agents work and make decisions.</li>
+              <li><strong>AI Automation:</strong> Build automated AI-powered workflows.</li>
+              <li><strong>Agentic AI:</strong> Understand autonomous task execution.</li>
+              <li><strong>Hands-On Implementation:</strong> Work with practical examples and real use cases.</li>
+              <li><strong>Build &amp; Automate:</strong> Turn AI ideas into working automations.</li>
+            </ul>
+          </div>
+
+          <!-- Card 2: Participants -->
+          <div class="ws-card">
+            <div class="wsc-icon">👥</div>
+            <h4>Participants (45 Students)</h4>
+            <p class="ws-card-sub">Seat allocation for this flagship workshop:</p>
+            <div class="ws-seats-breakdown">
+              <div class="ws-seat-item">
+                <span class="wss-count">45</span>
+                <span class="wss-label">Total Seats</span>
+              </div>
+              <div class="ws-seat-item">
+                <span class="wss-count wss-internal">15</span>
+                <span class="wss-label">Our College</span>
+              </div>
+              <div class="ws-seat-item">
+                <span class="wss-count wss-external">30</span>
+                <span class="wss-label">Other Colleges</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Workshop Guidelines -->
+          <div class="ws-card">
+            <div class="wsc-icon">📌</div>
+            <h4>Workshop Guidelines</h4>
+            <ul class="ws-list">
+              <li><strong>Be on Time:</strong> Report on time and carry your physical college ID card.</li>
+              <li><strong>Bring Charged Laptop:</strong> Bring a fully charged laptop for hands-on sessions.</li>
+              <li><strong>Participate Actively:</strong> Participate actively in all hands-on activities and labs.</li>
+            </ul>
+          </div>
+
+          <!-- Card 4: Dress Code -->
+          <div class="ws-card">
+            <div class="wsc-icon">👔</div>
+            <h4>Dress Code</h4>
+            <div class="ws-dress-grid">
+              <div class="ws-dress-col">
+                <span class="wsd-badge">FOR BOYS</span>
+                <ul class="ws-list-sub">
+                  <li>Formal full-sleeve shirt and trousers</li>
+                  <li>Formal shoes with socks</li>
+                  <li>Neat and well-groomed appearance</li>
+                  <li class="wsd-warn">Casual wear, jeans, T-shirts, sneakers, and sandals are not permitted</li>
+                </ul>
+              </div>
+              <div class="ws-dress-col">
+                <span class="wsd-badge">FOR GIRLS</span>
+                <ul class="ws-list-sub">
+                  <li>Chudidhar / Salwar suit with shawl</li>
+                  <li>Formal or professional footwear</li>
+                  <li>Neat and well-groomed appearance</li>
+                  <li class="wsd-warn">Leggings, jeans, denim, and casual wear are not permitted</li>
+                </ul>
+              </div>
+            </div>
+            <p class="ws-dress-note">All participants are expected to maintain a formal and professional appearance
+              throughout the workshop.</p>
+          </div>
+
+          <!-- Card 5: Certificates & Internship -->
+          <div class="ws-card">
+            <div class="wsc-icon">📜</div>
+            <h4>Certificates &amp; Internship Opportunity</h4>
+            <ul class="ws-list">
+              <li><strong>Workshop Certificate:</strong> All participating students will receive a Workshop
+                Participation Certificate.</li>
+              <li><strong>Internship Opportunity:</strong> Students who demonstrate active participation, technical
+                interest, problem-solving ability, and strong performance will be considered for an internship
+                opportunity with <strong>Yotvis</strong>.</li>
+            </ul>
+            <p class="ws-perk-quote">"Your participation and what you actually build will matter."</p>
+          </div>
+
+          <!-- Card 6: Let's Build the Future of AI -->
+          <div class="ws-card">
+            <div class="wsc-icon">⚡</div>
+            <h4>Let's Build the Future of AI</h4>
+            <p class="ws-future-lead">Let's make this workshop interactive, practical, informative, and exciting.</p>
+            <div class="evp-pill-row">
+              <span class="evp-pill">COME WITH QUESTIONS</span>
+              <span class="evp-pill">COME WITH IDEAS</span>
+              <span class="evp-pill">COME READY TO BUILD</span>
+              <span class="evp-pill">COME READY TO EXPERIMENT</span>
+            </div>
+            <p class="ws-act-callout">Explore how AI can not just <strong>THINK</strong>, but <strong>ACT</strong>.</p>
+          </div>
+
+        </div>
+
+        <!-- Action Box & Partner Link -->
+        <div class="ws-action-box">
+          <div class="ws-meta">
+            <span class="wsm-item"><strong>OFFICIAL WEBSITE:</strong> <a href="http://www.yotvis.com" target="_blank"
+                rel="noopener noreferrer" class="ws-link">www.yotvis.com ↗</a></span>
+            <span class="wsm-sep">|</span>
+            <span class="wsm-item"><strong>CONTACT US:</strong> <a href="tel:+918778460062" class="ws-phone-link">+91
+                87784 60062</a> &bull; <a href="tel:+918637695306" class="ws-phone-link">+91 86376 95306</a></span>
+          </div>
+          <a href="#register" class="btn-doom ws-btn">
+            <span class="bd-bg"></span>
+            <span class="bd-text">RESERVE WORKSHOP SEAT</span>
+            <span class="bd-arrow">→</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION DIVIDER -->
+  <div class="sec-slash sec-slash-nt" aria-hidden="true">
+    <div class="ssl-left"></div>
+    <span>// NON-TECHNICAL EVENTS</span>
+    <div class="ssl-right"></div>
+  </div>
+
+  <!-- ========================================================
+       NON-TECHNICAL EVENTS
+  ======================================================== -->
+  <section id="nontech-events" class="events-sec nt-sec">
+    <!-- Section Green Fog Smoke Overlay -->
+    <div class="sec-fog" aria-hidden="true">
+      <div class="fog-blob fog-b"></div>
+      <div class="fog-blob fog-c"></div>
+    </div>
+    <div class="container">
+      <div class="ev-intro reveal-up">
+        <span class="ev-code ev-code-nt">N — SECTOR</span>
+        <h2 class="ev-heading">Non-Technical<br /><span class="ev-accent-nt">Arenas</span></h2>
+        <p class="ev-sub">Entertainment, wit, and talent — the lighter side of Doom's dominion.</p>
+      </div>
+    </div>
+
+    <div class="ev-strips nt-strips">
+
+      <!-- Non-Technical Event 1: Battle of Beats (Start Music) -->
+      <div class="ev-strip nt-strip reveal-up" style="--pd:0s">
+        <div class="evs-num evs-num-nt">N01</div>
+        <div class="evs-body">
+          <div class="evs-title-row">
+            <span class="evs-emoji">🎵</span>
+            <div class="evs-title-group">
+              <h3 class="evs-name">Battle of Beats</h3>
+              <span class="evs-subnote evs-subnote-nt">[ START MUSIC ]</span>
+            </div>
+            <div class="evs-tags">
+              <span class="etag etag-beg-nt">Beginner</span>
+              <span class="etag etag-team">1–4 Members</span>
+            </div>
+          </div>
+          <p class="evs-desc">Identify songs from short audio clips, guess titles or artists as quickly as possible, and
+            rule the rhythm in this high-energy musical game.</p>
+
+          <!-- Rules & Guidelines Accordion -->
+          <details class="ev-rules-accordion">
+            <summary class="ev-rules-trigger">
+              <span>📋 EVENT RULES &amp; OFFICIAL GUIDELINES</span>
+              <span class="ev-rules-icon">▼</span>
+            </summary>
+            <div class="ev-rules-body">
+
+              <!-- Team Formation -->
+              <div class="ev-rule-group">
+                <h4>👥 1. Team Formation</h4>
+                <ul>
+                  <li>Each team must have <strong>1–4 members</strong>.</li>
+                  <li>Participants must carry a valid <strong>College ID Card</strong>.</li>
+                </ul>
+              </div>
+
+              <!-- General Rules -->
+              <div class="ev-rule-group">
+                <h4>📋 2. General Rules</h4>
+                <ul>
+                  <li>All teams must participate in the <strong>first three rounds</strong>.</li>
+                  <li>Each round has a fixed time limit.</li>
+                  <li>Mobile phones and electronic devices are <strong>not allowed</strong>.</li>
+                  <li>No cheating, hints or external assistance.</li>
+                  <li>Participants must follow coordinators' instructions.</li>
+                  <li>Judges' decision is <strong>final and binding</strong>.</li>
+                </ul>
+              </div>
+
+              <!-- Round 1 -->
+              <div class="ev-rule-stage">
+                <div class="ev-rule-stage-header">
+                  <span class="ev-stage-badge">ROUND 1</span>
+                  <span class="ev-stage-title">Image Connect</span>
+                </div>
+                <ul>
+                  <li>Identify the song using the given images.</li>
+                  <li>Correct answer: <strong>1 point</strong>.</li>
+                </ul>
+              </div>
+
+              <!-- Round 2 -->
+              <div class="ev-rule-stage">
+                <div class="ev-rule-stage-header">
+                  <span class="ev-stage-badge ev-stage-badge-semi">ROUND 2</span>
+                  <span class="ev-stage-title">BGM Challenge</span>
+                </div>
+                <ul>
+                  <li>Identify the song from the BGM.</li>
+                  <li>Correct answer: <strong>1 point</strong>.</li>
+                </ul>
+              </div>
+
+              <!-- Round 3 -->
+              <div class="ev-rule-stage">
+                <div class="ev-rule-stage-header">
+                  <span class="ev-stage-badge ev-stage-badge-semi">ROUND 3</span>
+                  <span class="ev-stage-title">Find the Missing Word</span>
+                </div>
+                <ul>
+                  <li>Identify the missing word from the given lyric.</li>
+                  <li>Correct answer: <strong>1 point</strong>.</li>
+                </ul>
+              </div>
+
+              <!-- Round 4 -->
+              <div class="ev-rule-stage">
+                <div class="ev-rule-stage-header">
+                  <span class="ev-stage-badge ev-stage-badge-final">ROUND 4</span>
+                  <span class="ev-stage-title">Tie-Breaker</span>
+                </div>
+                <ul>
+                  <li>Conducted <strong>only in case of a tie</strong> after Round 3.</li>
+                  <li>Only tied teams will participate.</li>
+                  <li>Music-based questions will be used to determine the winner.</li>
+                  <li>Judges' decision is <strong>final</strong>.</li>
+                </ul>
+              </div>
+
+              <!-- Disqualification -->
+              <div class="ev-rule-group">
+                <h4>🚫 7. Disqualification</h4>
+                <p>A team may be disqualified for:</p>
+                <ul>
+                  <li>Cheating or using electronic devices.</li>
+                  <li>Giving hints to other teams.</li>
+                  <li>Misconduct or failure to follow instructions.</li>
+                </ul>
+              </div>
+
+              <!-- Final Command -->
+              <div class="ev-rule-group ev-rule-important">
+                <h4>🎵 FINAL COMMAND</h4>
+                <div class="evp-pill-row">
+                  <span class="evp-pill">IMAGE CONNECT</span>
+                  <span class="evp-pill">BGM CHALLENGE</span>
+                  <span class="evp-pill">MISSING WORD</span>
+                  <span class="evp-pill">RULE THE RHYTHM</span>
+                </div>
+                <p class="ev-final-note">BATTLE OF BEATS &mdash; Only the sharpest ears claim the crown.</p>
+              </div>
+
+            </div>
+          </details>
+
+        </div>
+        <div class="evs-glow evs-glow-nt"></div>
+        <div class="evs-bar evs-bar-nt"></div>
+      </div>
+
+      <!-- Non-Technical Event 2: Cosmic Clash (E-Sports / Free Fire) -->
+      <div class="ev-strip nt-strip alt-strip-nt reveal-up" style="--pd:0.06s">
+        <div class="evs-num evs-num-nt">N02</div>
+        <div class="evs-body">
+          <div class="evs-title-row">
+            <span class="evs-emoji">🎮</span>
+            <div class="evs-title-group">
+              <h3 class="evs-name">Cosmic Clash</h3>
+              <span class="evs-subnote evs-subnote-nt">[ E-SPORTS / FREE FIRE ]</span>
+            </div>
+            <div class="evs-tags">
+              <span class="etag etag-open-nt">All Levels</span>
+              <span class="etag etag-team">Squad / Solo</span>
+            </div>
+          </div>
+          <p class="evs-desc">Enter the digital battleground! Compete in intense Free Fire &amp; gaming tournaments,
+            demonstrate team coordination, and claim ultimate supremacy.</p>
+
+          <!-- Rules & Guidelines Accordion -->
+          <details class="ev-rules-accordion">
+            <summary class="ev-rules-trigger">
+              <span>📋 EVENT RULES &amp; OFFICIAL GUIDELINES</span>
+              <span class="ev-rules-icon">▼</span>
+            </summary>
+            <div class="ev-rules-body">
+
+              <!-- Tournament Format -->
+              <div class="ev-rule-group">
+                <h4>🏆 Tournament Format — 3 Stage System</h4>
+
+                <div class="ev-rule-stage">
+                  <div class="ev-rule-stage-header">
+                    <span class="ev-stage-badge">STAGE 1</span>
+                    <span class="ev-stage-title">BR Qualifiers</span>
+                  </div>
+                  <ul>
+                    <li><strong>Match 1 — BR:</strong> All registered squads compete in a Battle Royale match.</li>
+                    <li><strong>Match 2 — BR:</strong> Second qualifier Battle Royale match for all squads.</li>
+                    <li><strong>Qualification Criteria:</strong> Top 2 teams from each match qualify to Stage 2.</li>
+                    <li><strong>Kill Threshold:</strong> A minimum of <strong>8 kills</strong> is required to qualify
+                      for the next round.</li>
+                  </ul>
+                </div>
+
+                <div class="ev-rule-stage">
+                  <div class="ev-rule-stage-header">
+                    <span class="ev-stage-badge ev-stage-badge-semi">STAGE 2</span>
+                    <span class="ev-stage-title">CS Semi-Finals</span>
+                  </div>
+                  <ul>
+                    <li><strong>Match 3 — CS:</strong> Team 1 vs Team 2 — Classic Squad clash.</li>
+                    <li><strong>Match 4 — CS:</strong> Team 3 vs Team 4 — Classic Squad clash.</li>
+                    <li><strong>Qualification:</strong> Winners of each match advance to the Grand Final.</li>
+                  </ul>
+                </div>
+
+                <div class="ev-rule-stage">
+                  <div class="ev-rule-stage-header">
+                    <span class="ev-stage-badge ev-stage-badge-final">STAGE 3</span>
+                    <span class="ev-stage-title">CS Grand Final</span>
+                  </div>
+                  <ul>
+                    <li><strong>Match 5 — CS:</strong> Winner 1 vs Winner 2 — The ultimate showdown.</li>
+                    <li><strong>Champion:</strong> The winner of Match 5 becomes the <strong>Tournament
+                        Champion</strong>.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Match Flow Visual -->
+              <div class="ev-rule-group">
+                <h4>📊 Match Progression</h4>
+                <div class="ev-match-bracket">
+                  <div class="ev-bracket-row">
+                    <span class="ev-bracket-node ev-bracket-br">Match 1 (BR)</span>
+                    <span class="ev-bracket-arrow">→</span>
+                    <span class="ev-bracket-node ev-bracket-semi">Match 3 (CS)</span>
+                    <span class="ev-bracket-arrow">→</span>
+                    <span class="ev-bracket-node ev-bracket-final">GRAND FINAL</span>
+                  </div>
+                  <div class="ev-bracket-row">
+                    <span class="ev-bracket-node ev-bracket-br">Match 2 (BR)</span>
+                    <span class="ev-bracket-arrow">→</span>
+                    <span class="ev-bracket-node ev-bracket-semi">Match 4 (CS)</span>
+                    <span class="ev-bracket-arrow">→</span>
+                    <span class="ev-bracket-node ev-bracket-final">🏆 CHAMPION</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Main Rules -->
+              <div class="ev-rule-group">
+                <h4>⚙️ Main Rules</h4>
+                <ul>
+                  <li><strong>Rule 1 — Gun Skin:</strong> Gun Skin must be turned <strong>OFF</strong> in both BR and CS
+                    matches.</li>
+                  <li><strong>Rule 2 — No Team-Up:</strong> Teaming up with any other team or opponent during BR matches
+                    is strictly <strong>PROHIBITED</strong>.</li>
+                  <li><strong>Rule 3 — Kill Threshold:</strong> A minimum of <strong>8 kills</strong> is required to
+                    qualify from the BR Qualifier stage to the next round.</li>
+                  <li><strong>Rule 4 — Character Skill:</strong> Character Skills must be turned <strong>OFF</strong> in
+                    all CS matches.</li>
+                </ul>
+              </div>
+
+              <!-- Fair Play -->
+              <div class="ev-rule-group">
+                <h4>🛡️ Fair Play &amp; Conduct</h4>
+                <ul>
+                  <li><strong>Device Policy:</strong> Participants must use their own mobile devices. Tablets are not
+                    permitted.</li>
+                  <li><strong>Account Authenticity:</strong> Only the participant's own Free Fire account may be used.
+                    Account sharing is prohibited.</li>
+                  <li><strong>Hacking / Cheating:</strong> Use of any hacks, mods, emulators, or third-party tools will
+                    result in immediate disqualification.</li>
+                  <li><strong>Connectivity:</strong> Players are responsible for their own internet connectivity.
+                    Disconnection will not result in a rematch.</li>
+                  <li><strong>Organizer's Word is Final:</strong> All decisions made by the organizing committee are
+                    final and binding.</li>
+                </ul>
+              </div>
+
+              <!-- Final Command -->
+              <div class="ev-rule-group ev-rule-important">
+                <h4>🎮 FINAL COMMAND</h4>
+                <div class="evp-pill-row">
+                  <span class="evp-pill">SQUAD UP</span>
+                  <span class="evp-pill">8 KILLS TO SURVIVE</span>
+                  <span class="evp-pill">PLAY FAIR</span>
+                  <span class="evp-pill">CLAIM VICTORY</span>
+                </div>
+                <p class="ev-final-note">Cosmic Clash — Only the deadliest squad rises to be Champion.</p>
+              </div>
+
+            </div>
+          </details>
+
+        </div>
+        <div class="evs-glow evs-glow-nt evs-glow-alt-nt"></div>
+        <div class="evs-bar evs-bar-nt evs-bar-alt-nt"></div>
+      </div>
+
+      <!-- Non-Technical Event 3: Infinity Bid Wars (IPL Auction) -->
+      <div class="ev-strip nt-strip reveal-up" style="--pd:0.12s">
+        <div class="evs-num evs-num-nt">N03</div>
+        <div class="evs-body">
+          <div class="evs-title-row">
+            <span class="evs-emoji">🏏</span>
+            <div class="evs-title-group">
+              <h3 class="evs-name">Infinity Bid Wars</h3>
+              <span class="evs-subnote evs-subnote-nt">[ IPL AUCTION ]</span>
+            </div>
+            <div class="evs-tags">
+              <span class="etag etag-mid-nt">Strategy</span>
+              <span class="etag etag-team">2–4 Members</span>
+            </div>
+          </div>
+          <p class="evs-desc">Experience the thrill of a real IPL auction! Strategy, bidding wars, budget management,
+            and squad building. Outbid rivals to assemble the ultimate dream team.</p>
+
+          <!-- Rules & Guidelines Accordion -->
+          <details class="ev-rules-accordion">
+            <summary class="ev-rules-trigger">
+              <span>📋 EVENT RULES & OFFICIAL GUIDELINES</span>
+              <span class="ev-rules-icon">▼</span>
+            </summary>
+            <div class="ev-rules-body">
+
+              <div class="ev-rule-group">
+                <h4>📋 Rules &amp; Regulations</h4>
+                <ul>
+                  <li><strong>Team Size:</strong> Each team must consist of <strong>2–4 participants</strong>, with one
+                    member designated as the Team Captain.</li>
+                  <li><strong>Materials:</strong> Participants must bring their own pen, paper, laptop, calculator, and
+                    other required materials. The Organizing Committee will not provide these.</li>
+                  <li><strong>Auction Purse:</strong> Each team will receive an equal stipulated purse and must manage
+                    it strategically throughout the auction.</li>
+                  <li><strong>Bidding:</strong> Bids must follow the announced bidding increments and will be considered
+                    final once acknowledged by the auctioneer.</li>
+                  <li><strong>Squad Formation:</strong> Teams must form the required playing line-up within the
+                    stipulated purse. Failure to do so will result in <strong>disqualification</strong>.</li>
+                  <li><strong>Judging Criteria:</strong> The judging criteria will remain confidential and will be
+                    revealed only after the auction concludes.</li>
+                  <li><strong>Fair Play:</strong> Collusion, fake bids, disruptive behaviour, or any form of unfair
+                    practice will lead to penalties or disqualification.</li>
+                  <li><strong>Disputes:</strong> Any disputes must be raised through the Team Captain. The decision of
+                    the Organizing Committee will be <strong>final and binding</strong>.</li>
+                  <li><strong>General:</strong> Participants must report to the venue on time and follow all
+                    instructions given by the organizers.</li>
+                </ul>
+              </div>
+
+              <div class="ev-rule-group ev-rule-important">
+                <h4>⚔️ FINAL COMMAND</h4>
+                <div class="evp-pill-row">
+                  <span class="evp-pill">BID SMART</span>
+                  <span class="evp-pill">BUILD STRONG</span>
+                  <span class="evp-pill">SURVIVE THE AUCTION</span>
+                </div>
+                <p class="ev-final-note">INFINITY BID WARS &mdash; Only the smartest bidders survive.</p>
+              </div>
+
+            </div>
+          </details>
+        </div>
+        <div class="evs-glow evs-glow-nt"></div>
+        <div class="evs-bar evs-bar-nt"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SCHEDULE — Mission Log Style
+  ======================================================== -->
+  <section id="schedule" class="sched-sec">
+    <!-- Section Green Fog Smoke Overlay -->
+    <div class="sec-fog" aria-hidden="true">
+      <div class="fog-blob fog-a"></div>
+      <div class="fog-blob fog-c"></div>
+    </div>
+    <div class="sched-bg-text" aria-hidden="true">DAY·ONE</div>
+    <div class="container">
+      <div class="sched-header reveal-up">
+        <span class="ev-code">MISSION LOG</span>
+        <h2 class="ev-heading">Event <span class="ev-accent">Schedule</span></h2>
+        <p class="ev-sub">September 19, 2026 &mdash; Velammal Institute of Technology</p>
+      </div>
+
+      <div class="sched-log">
+
+        <div class="sl-entry reveal-up" style="--pd:0.0s">
+          <div class="sl-time">08:30 AM</div>
+          <div class="sl-connector">
+            <div class="sl-dot"></div>
+            <div class="sl-line"></div>
+          </div>
+          <div class="sl-content">
+            <h4>Registration &amp; Check-in</h4>
+            <p>Participants arrive and complete on-site verification</p>
+          </div>
+          <div class="sl-tag">OPEN</div>
+        </div>
+
+        <div class="sl-entry reveal-up" style="--pd:0.07s">
+          <div class="sl-time">09:30 AM</div>
+          <div class="sl-connector">
+            <div class="sl-dot"></div>
+            <div class="sl-line"></div>
+          </div>
+          <div class="sl-content">
+            <h4>Inaugural Ceremony</h4>
+            <p>Official launch of NEXCODIA '26 with faculty and guest speakers</p>
+          </div>
+          <div class="sl-tag">LAUNCH</div>
+        </div>
+
+        <div class="sl-entry reveal-up" style="--pd:0.14s">
+          <div class="sl-time">10:30 AM</div>
+          <div class="sl-connector">
+            <div class="sl-dot sl-dot-hot"></div>
+            <div class="sl-line"></div>
+          </div>
+          <div class="sl-content">
+            <h4>Event Starts</h4>
+            <p>Technical &amp; Non-Technical Event Battles commence across all venues</p>
+          </div>
+          <div class="sl-tag sl-tag-hot">BATTLE</div>
+        </div>
+
+        <div class="sl-entry reveal-up" style="--pd:0.21s">
+          <div class="sl-time">01:00 PM</div>
+          <div class="sl-connector">
+            <div class="sl-dot"></div>
+            <div class="sl-line"></div>
+          </div>
+          <div class="sl-content">
+            <h4>Lunch Break</h4>
+            <p>Complementary lunch for all registered participants</p>
+          </div>
+          <div class="sl-tag">REST</div>
+        </div>
+
+        <div class="sl-entry reveal-up" style="--pd:0.28s">
+          <div class="sl-time">02:00 PM</div>
+          <div class="sl-connector">
+            <div class="sl-dot sl-dot-fin"></div>
+          </div>
+          <div class="sl-content">
+            <h4>Valedictory &amp; Prize Distribution</h4>
+            <p>Grand finale — winners announced and prizes awarded</p>
+          </div>
+          <div class="sl-tag sl-tag-fin">GLORY</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       REGISTER — Full-bleed dramatic CTA
+  ======================================================== -->
+  <section id="register" class="reg-sec">
+
+    <div class="reg-grid-bg" aria-hidden="true" id="regGridBg"></div>
+
+    <div class="container reg-inner">
+
+      <div class="reg-left reveal-left">
+        <span class="ev-code">// JOIN THE BATTLE</span>
+        <h2 class="reg-heading">Register<br /><span class="ev-accent">Now</span></h2>
+
+        <ul class="reg-rules">
+          <li><span class="rr-marker">→</span> Registration fee: <strong>₹200 per participant</strong></li>
+          <li><span class="rr-marker">→</span> Up to <strong>2 Technical + 2 Non-Technical</strong> events</li>
+          <li><span class="rr-marker">→</span> Pay via QR code inside the form</li>
+          <li><span class="rr-marker">→</span> Upload payment proof after submission</li>
+          <li><span class="rr-marker">→</span> <strong>Food included</strong> for all participants</li>
+          <li><span class="rr-marker">→</span> Transport <strong>not provided</strong></li>
+          <li><span class="rr-marker">⏰</span> Deadline: <strong>September 10, 2026</strong></li>
+        </ul>
+
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScIb2LrJ7i5rlA4wsNj6Z7krCul2wRjYHE01zI0UToNq6Zg7Q/viewform?usp=publish-editor"
+          target="_blank" rel="noopener noreferrer" class="btn-doom reg-btn" id="formLink">
+          <span class="bd-bg"></span>
+          <span class="bd-text">OPEN GOOGLE FORM</span>
+          <span class="bd-arrow">→</span>
+        </a>
+      </div>
+
+      <div class="reg-right reveal-right">
+        <div class="qr-frame">
+          <div class="qrf-corners">
+            <span class="qrc qrc-tl"></span>
+            <span class="qrc qrc-tr"></span>
+            <span class="qrc qrc-bl"></span>
+            <span class="qrc qrc-br"></span>
+          </div>
+          <div class="qr-box">
+            <div class="qrp-scan"></div>
+            <img src="registration-qr.png" alt="Scan QR Code to Register for NEXCODIA '26" class="qr-img" />
+          </div>
+          <div class="qrf-label">SCAN TO REGISTER</div>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLScIb2LrJ7i5rlA4wsNj6Z7krCul2wRjYHE01zI0UToNq6Zg7Q/viewform?usp=publish-editor"
+            target="_blank" rel="noopener noreferrer" class="qr-link-sub">Click here to open form directly ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       CONTACT
+  ======================================================== -->
+  <section id="contact" class="contact-sec">
+    <div class="contact-bg-text" aria-hidden="true">OPERATIVES</div>
+    <div class="container">
+      <div class="contact-header reveal-up">
+        <span class="ev-code">// SUMMON THE COUNCIL</span>
+        <h2 class="ev-heading">Coordinators</h2>
+      </div>
+
+      <div class="coord-layout">
+
+        <!-- Faculty (Count: 2) -->
+        <div class="coord-col reveal-left" style="--pd:0s">
+          <h3 class="coord-col-title">
+            <span class="cct-mark">🎓</span> Faculty Coordinators (2)
+          </h3>
+          <div class="coord-list">
+            <a href="tel:+916380167919" class="coord-agent">
+              <div class="ca-badge">R</div>
+              <div class="ca-info">
+                <span class="ca-name">Mr. Retheesh D</span>
+                <span class="ca-phone">+91 72991 72972</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+917010046762" class="coord-agent">
+              <div class="ca-badge">P</div>
+              <div class="ca-info">
+                <span class="ca-name">Mrs. PonSangeetha A</span>
+                <span class="ca-phone">+91 79048 30224</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Students (Count: 18) -->
+        <div class="coord-col coord-col-stu reveal-right" style="--pd:0s">
+          <h3 class="coord-col-title coord-col-title-stu">
+            <span class="cct-mark">⚡</span> Student Coordinators (19)
+          </h3>
+          <div class="coord-list coord-list-grid">
+            <a href="tel:+918838294994" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">G</div>
+              <div class="ca-info">
+                <span class="ca-name">Gopinath M</span>
+                <span class="ca-phone">+91 80153 62615</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+918438559731" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">K</div>
+              <div class="ca-info">
+                <span class="ca-name">Kanna </span>
+                <span class="ca-phone">+91 93446 82995</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+919345115018" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">V</div>
+              <div class="ca-info">
+                <span class="ca-name">Vennila N G</span>
+                <span class="ca-phone">+91 88259 91675</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+919894422179" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">S</div>
+              <div class="ca-info">
+                <span class="ca-name">Sai Sindhu</span>
+                <span class="ca-phone">+91 80150 85212</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+917386739779" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">S</div>
+              <div class="ca-info">
+                <span class="ca-name">Sundara Raghavan K S</span>
+                <span class="ca-phone">+91 94450 25504</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+918939877172" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">H</div>
+              <div class="ca-info">
+                <span class="ca-name">HemaCharan</span>
+                <span class="ca-phone">+91 90593 75578</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+919000000007" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">C</div>
+              <div class="ca-info">
+                <span class="ca-name">Chinni Charanya Lasya</span>
+                <span class="ca-phone">+91 78010 82668</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+919000000008" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">G</div>
+              <div class="ca-info">
+                <span class="ca-name">Geethu Niharika</span>
+                <span class="ca-phone">+91 63024 27750</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+919000000009" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">M</div>
+              <div class="ca-info">
+                <span class="ca-name">Mirrudula M</span>
+                <span class="ca-phone">+91 63831 47636</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+919000000010" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">S</div>
+              <div class="ca-info">
+                <span class="ca-name">Shamitha Elangovan</span>
+                <span class="ca-phone">+91 88383 95256</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+919000000011" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">J</div>
+              <div class="ca-info">
+                <span class="ca-name">Jersiah Lois J</span>
+                <span class="ca-phone">+91 94896 21460</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+919000000012" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">R</div>
+              <div class="ca-info">
+                <span class="ca-name">Ritika S</span>
+                <span class="ca-phone">+91 97911 50171</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+919000000013" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">S</div>
+              <div class="ca-info">
+                <span class="ca-name">Surya K</span>
+                <span class="ca-phone">+91 73394 04151</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+919000000014" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">M</div>
+              <div class="ca-info">
+                <span class="ca-name">Manoj P</span>
+                <span class="ca-phone">+91 89036 65006</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+919000000015" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">D</div>
+              <div class="ca-info">
+                <span class="ca-name">Dharshini R</span>
+                <span class="ca-phone">+91 90437 45143</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+919000000016" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">S</div>
+              <div class="ca-info">
+                <span class="ca-name">Sai Ganesh</span>
+                <span class="ca-phone">+91 77940 74718</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+919000000017" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">E</div>
+              <div class="ca-info">
+                <span class="ca-name">Ezhil Karthik R</span>
+                <span class="ca-phone">+91 72002 56805</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+919000000018" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">S</div>
+              <div class="ca-info">
+                <span class="ca-name">Susanth Kumar Singh</span>
+                <span class="ca-phone">+91 87784 18139</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+            <a href="tel:+919000000019" class="coord-agent ca-stu">
+              <div class="ca-badge ca-badge-stu">A</div>
+              <div class="ca-info">
+                <span class="ca-name">Arya K</span>
+                <span class="ca-phone">+91 63832 69091</span>
+              </div>
+              <span class="ca-icon">↗</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================
+       FOOTER
+  ======================================================== -->
+  <footer class="site-footer">
+    <div class="sf-top-line"></div>
+    <div class="container sf-inner">
+      <div class="sf-logo">
+        <span class="hl-bracket">[</span>
+        <span class="hl-text">NEX<span class="hl-accent">CODIA</span></span>
+        <span class="hl-bracket">]</span>
+        <span class="hl-year">'26</span>
+      </div>
+      <p class="sf-tagline">Doom Has Arrived. Your Legend Awaits.</p>
+      <nav class="sf-nav">
+        <a href="#hero">Home</a>
+        <a href="#about">About</a>
+        <a href="#tech-events">Technical</a>
+        <a href="#nontech-events">Non-Tech</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#register">Register</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <p class="sf-copy">&copy; 2026 NEXCODIA &mdash; Dept. of CSE, Velammal Institute of Technology. All rights
+        reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
