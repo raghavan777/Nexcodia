@@ -426,9 +426,8 @@ const TYPED_STRINGS = [
 })();
 
 /* ================================================================
-   FLIP COUNTDOWN TIMER + VIEWPORT-TRIGGERED TICK AUDIO
-   Audio plays automatically when countdown is visible in the viewport,
-   and pauses automatically when scrolled out of view.
+   FLIP COUNTDOWN TIMER + PERSISTENT BACKGROUND TICK AUDIO
+   Audio plays continuously without turning off when scrolling down.
    ================================================================ */
 (function initCountdownAndTick() {
   // --- DOM elements ---
@@ -439,11 +438,12 @@ const TYPED_STRINGS = [
     s: document.getElementById('cdSec'),
   };
 
-  // --- Audio ---
+  // --- Persistent Audio Setup ---
   const tickAudio = new Audio('tick-sound.wav');
   tickAudio.preload = 'auto';
-  let inViewport = false;
+  tickAudio.loop = true; // Enables continuous seamless looping across the entire website
   let lastSecond = -1;
+  let isAudioStarted = false;
 
   function pad(n) { return String(n).padStart(2, '0'); }
 
@@ -459,66 +459,52 @@ const TYPED_STRINGS = [
     }
   }
 
-  /* Fire one tick — only when countdown is currently visible in the viewport */
-  function fireTick() {
-    if (!inViewport) return;
-    try {
-      tickAudio.currentTime = 0;
-      const playPromise = tickAudio.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {});
-      }
-    } catch (e) {}
-  }
+  /* Start and maintain continuous playback */
+  function startContinuousAudio() {
+    if (isAudioStarted && !tickAudio.paused) return;
 
-  /* Immediate auto-start when countdown is in view */
-  function tryAutoStart() {
-    if (!inViewport) return;
-    try {
-      tickAudio.play().then(() => {
-        // Autoplay successfully initiated while visible
-      }).catch(() => {
-        // Passive fallback in case strict browser autoplay blocks the initial frame
-        const quickUnlock = () => {
-          if (inViewport) fireTick();
-          ['click', 'keydown', 'touchstart', 'pointerdown', 'scroll', 'mousemove', 'wheel'].forEach(evt =>
-            window.removeEventListener(evt, quickUnlock)
-          );
-        };
-        ['click', 'keydown', 'touchstart', 'pointerdown', 'scroll', 'mousemove', 'wheel'].forEach(evt =>
-          window.addEventListener(evt, quickUnlock, { passive: true, once: true })
-        );
-      });
-    } catch (e) {}
-  }
+    tickAudio.play().then(() => {
+      isAudioStarted = true;
+    }).catch(() => {
+      // If browser blocks immediate autoplay, attach persistent global interaction hooks
+      const unlockAndPlay = () => {
+        tickAudio.play().then(() => {
+          isAudioStarted = true;
+        }).catch(() => {});
+      };
 
-  // --- Viewport Intersection Observer ---
-  const cdWrapper = document.querySelector('.countdown-wrap') || document.querySelector('.countdown') || document.getElementById('hero');
-  if (cdWrapper && 'IntersectionObserver' in window) {
-    const cdObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        inViewport = entry.isIntersecting && entry.intersectionRatio > 0.05;
-        if (inViewport) {
-          tryAutoStart();
-        }
-      });
-    }, {
-      threshold: [0, 0.05, 0.2, 0.5]
+      ['click', 'touchstart', 'touchend', 'pointerdown', 'keydown', 'scroll', 'wheel'].forEach(evt =>
+        window.addEventListener(evt, unlockAndPlay, { passive: true })
+      );
     });
-    cdObserver.observe(cdWrapper);
-  } else {
-    inViewport = true;
   }
 
-  // Attempt auto-start on load if already in viewport
+  // Keep-alive: If mobile browser tries to pause audio when scrolling out of viewport, immediately resume
+  tickAudio.addEventListener('pause', () => {
+    if (!document.hidden && isAudioStarted) {
+      tickAudio.play().catch(() => {});
+    }
+  });
+
+  tickAudio.addEventListener('ended', () => {
+    tickAudio.currentTime = 0;
+    tickAudio.play().catch(() => {});
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && isAudioStarted) {
+      tickAudio.play().catch(() => {});
+    }
+  });
+
+  // Attempt auto-start on load
+  startContinuousAudio();
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', tryAutoStart);
-  } else {
-    tryAutoStart();
+    document.addEventListener('DOMContentLoaded', startContinuousAudio);
   }
-  window.addEventListener('load', tryAutoStart);
+  window.addEventListener('load', startContinuousAudio);
 
-  /* Main update loop — runs every 100ms so second changes are caught promptly */
+  /* Main countdown digits loop — runs every 100ms for accurate flips */
   function update() {
     const diff = EVENT_DATE - Date.now();
     if (diff <= 0) {
@@ -532,15 +518,17 @@ const TYPED_STRINGS = [
     const h = Math.floor(totalSec / 3600) % 24;
     const d = Math.floor(totalSec / 86400);
 
-    flip(els.d, d);
-    flip(els.h, h);
-    flip(els.m, m);
-    flip(els.s, s);
-
-    /* Trigger tick exactly when the second digit changes and timer is visible */
     if (s !== lastSecond) {
       lastSecond = s;
-      fireTick();
+      flip(els.d, d);
+      flip(els.h, h);
+      flip(els.m, m);
+      flip(els.s, s);
+
+      // Ensure audio continues playing continuously
+      if (!isAudioStarted || tickAudio.paused) {
+        startContinuousAudio();
+      }
     }
   }
 
